@@ -48,6 +48,11 @@ app = FastAPI()
 api = APIRouter(prefix="/api")
 
 
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
+
+
 # ---------------------------------------------------------------------------
 # Models
 # ---------------------------------------------------------------------------
@@ -209,6 +214,20 @@ async def login(body: LoginBody):
 @api.get("/auth/me")
 async def me(user=Depends(get_current_user)):
     return public_user(user)
+
+
+@api.delete("/auth/me", status_code=204)
+async def delete_account(user=Depends(get_current_user)):
+    """Permanently delete the authenticated user and all associated data
+    (Apple App Store review requirement). User is derived from the verified
+    JWT, never from the client."""
+    uid = user["_id"]
+    await db.favorites.delete_many({"user_id": uid})
+    await db.events.delete_many({"user_id": uid})
+    await db.uploads.delete_many({"user_id": uid})
+    await db.custom_photos.delete_many({"user_id": uid})
+    await db.users.delete_one({"_id": uid})
+    return Response(status_code=204)
 
 
 # ---------------------------------------------------------------------------

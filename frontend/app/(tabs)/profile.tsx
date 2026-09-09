@@ -1,17 +1,19 @@
-import React from "react";
+import React, { useCallback, useRef } from "react";
 import { Linking, Pressable, ScrollView, Text, View } from "react-native";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { useFocusEffect, useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import * as WebBrowser from "expo-web-browser";
-import { Globe, SignOut, Heart, CaretRight, ForkKnife } from "phosphor-react-native";
+import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
+import { Globe, SignOut, Heart, CaretRight, ForkKnife, Trash, WarningCircle } from "phosphor-react-native";
 
 import { apiFetch, Recipe, resolveImage } from "@/src/api";
 import { Button } from "@/src/components/ui";
 import { useAuth } from "@/src/auth";
 import { useToast } from "@/src/toast";
+import { queryClient } from "@/src/query-client";
 import { fonts, makeStyles, radius, useTheme } from "@/src/theme";
 
 const BOOKING_URL = "https://www.themobilemixeryca.com";
@@ -46,7 +48,25 @@ export default function Profile() {
     }
   };
 
+  const deleteSheetRef = useRef<BottomSheet>(null);
+  const renderBackdrop = useCallback(
+    (props: any) => <BottomSheetBackdrop {...props} appearsOnIndex={0} disappearsOnIndex={-1} />,
+    [],
+  );
+
+  const deleteM = useMutation({
+    mutationFn: () => apiFetch("/auth/me", { method: "DELETE", auth: true }),
+    onSuccess: async () => {
+      deleteSheetRef.current?.close();
+      await logout();
+      queryClient.clear();
+      show("Your account has been deleted", "info");
+    },
+    onError: (e: any) => show(e?.message || "Could not delete account", "error"),
+  });
+
   return (
+    <>
     <ScrollView style={styles.screen} contentContainerStyle={{ paddingTop: insets.top + 8, paddingBottom: insets.bottom + 24 }} showsVerticalScrollIndicator={false}>
       <View style={styles.header}>
         <Text style={styles.eyebrow}>THE MOBILE MIXERY</Text>
@@ -139,7 +159,32 @@ export default function Profile() {
           <CaretRight size={16} color={colors.muted} weight="bold" />
         </Pressable>
       </View>
+
+      {/* Danger zone */}
+      {isAuthed && (
+        <View style={styles.section}>
+          <Pressable testID="delete-account-open" onPress={() => deleteSheetRef.current?.expand()} style={styles.deleteRow}>
+            <Trash size={18} color={colors.error} weight="bold" />
+            <Text style={styles.deleteText}>Delete my account</Text>
+          </Pressable>
+        </View>
+      )}
     </ScrollView>
+
+    <BottomSheet ref={deleteSheetRef} index={-1} snapPoints={["45%"]} enablePanDownToClose backdropComponent={renderBackdrop} backgroundStyle={{ backgroundColor: colors.surface }}>
+      <BottomSheetView style={styles.deleteSheet}>
+        <View style={styles.warnIcon}>
+          <WarningCircle size={34} color={colors.error} weight="fill" />
+        </View>
+        <Text style={styles.deleteTitle}>Delete your account?</Text>
+        <Text style={styles.deleteBody}>This permanently deletes your account and all associated data — favorites, event menus and uploaded photos. This cannot be undone.</Text>
+        <Button testID="delete-account-confirm" title="Delete Permanently" onPress={() => deleteM.mutate()} loading={deleteM.isPending} style={{ alignSelf: "stretch", marginTop: 16, backgroundColor: colors.error }} />
+        <Pressable testID="delete-account-cancel" onPress={() => deleteSheetRef.current?.close()} style={styles.cancelBtn}>
+          <Text style={styles.cancelText}>Cancel</Text>
+        </Pressable>
+      </BottomSheetView>
+    </BottomSheet>
+    </>
   );
 }
 
@@ -173,4 +218,12 @@ const useStyles = makeStyles((colors) => ({
   infoRow: { flexDirection: "row", alignItems: "center", gap: 12, backgroundColor: colors.surfaceSecondary, borderRadius: radius.md, padding: 14, borderWidth: 1, borderColor: colors.border, marginBottom: 10 },
   infoIcon: { width: 40, height: 40, borderRadius: 20, backgroundColor: colors.brandTertiary, alignItems: "center", justifyContent: "center" },
   infoTitle: { color: colors.onSurface, fontFamily: fonts.text, fontSize: 15, fontWeight: "700" },
+  deleteRow: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, paddingVertical: 12 },
+  deleteText: { color: colors.error, fontFamily: fonts.text, fontSize: 14, fontWeight: "700" },
+  deleteSheet: { padding: 24, alignItems: "center" },
+  warnIcon: { width: 68, height: 68, borderRadius: 34, backgroundColor: "#FEE2E2", alignItems: "center", justifyContent: "center", marginBottom: 12 },
+  deleteTitle: { color: colors.onSurface, fontFamily: fonts.display, fontSize: 24, fontWeight: "700", textAlign: "center" },
+  deleteBody: { color: colors.muted, fontFamily: fonts.text, fontSize: 14, textAlign: "center", marginTop: 8, lineHeight: 20 },
+  cancelBtn: { paddingVertical: 14, marginTop: 4 },
+  cancelText: { color: colors.onSurfaceSecondary, fontFamily: fonts.text, fontSize: 15, fontWeight: "700" },
 }));
