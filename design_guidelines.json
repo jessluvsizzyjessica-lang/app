@@ -1,0 +1,182 @@
+{
+  "app_name": "The Mobile Mixery",
+  "personality": "1 iOS-Native Clean structure with 3 Editorial typography",
+  "personality_one_liner": "A bright, fresh, and elegant cocktail companion that blends iOS-native clarity with magazine-like cocktail presentation.",
+  "color": {
+    "surface": "#FFFFFF",
+    "onSurface": "#0F172A",
+    "surfaceSecondary": "#F8FAFC",
+    "onSurfaceSecondary": "#334155",
+    "surfaceTertiary": "#F1F5F9",
+    "onSurfaceTertiary": "#475569",
+    "surfaceInverse": "#0F172A",
+    "onSurfaceInverse": "#FFFFFF",
+    "brand": "#7E22CE",
+    "brandPrimary": "#7E22CE",
+    "onBrandPrimary": "#FFFFFF",
+    "brandSecondary": "#A855F7",
+    "onBrandSecondary": "#FFFFFF",
+    "brandTertiary": "#F3E8FF",
+    "onBrandTertiary": "#7E22CE",
+    "success": "#10B981",
+    "onSuccess": "#FFFFFF",
+    "warning": "#F59E0B",
+    "onWarning": "#FFFFFF",
+    "error": "#EF4444",
+    "onError": "#FFFFFF",
+    "info": "#3B82F6",
+    "onInfo": "#FFFFFF",
+    "border": "#E2E8F0",
+    "borderStrong": "#CBD5E1",
+    "divider": "#F1F5F9",
+    "muted": "#64748B",
+    "onBrand": "#FFFFFF"
+  },
+  "typography": {
+    "displayFontFamily": "Playfair Display",
+    "textFontFamily": "Plus Jakarta Sans",
+    "scale": {
+      "sm": 12,
+      "base": 14,
+      "lg": 16,
+      "xl": 20,
+      "2xl": 24
+    }
+  },
+  "spacing": {
+    "rule": "Generous iOS-native rhythms. Use padding for breathing room around elegant cocktail photography.",
+    "xs": 4,
+    "sm": 8,
+    "md": 12,
+    "lg": 16,
+    "xl": 24,
+    "2xl": 32,
+    "3xl": 48
+  },
+  "radius_tokens": {
+    "sm": 6,
+    "md": 12,
+    "lg": 20,
+    "pill": 999
+  },
+  "shadow_tier": "1",
+  "navigation": "bottom_tabs",
+  "icon_set": "Phosphor",
+  "glassmorphism": {
+    "enabled": "true",
+    "do's": [
+      "Use on bottom tab bar to allow recipe images to bleed through.",
+      "Use on floating 'Add to Menu' CTA buttons.",
+      "Use over hero recipe photos for text readability."
+    ],
+    "dont's": [
+      "Do not use on form fields or dense recipe instruction lists."
+    ]
+  },
+  "platform_libraries": {
+    "glass": {
+      "ios": "expo-glass-effect",
+      "android": "expo-blur",
+      "low_end_android_fallback": "solid surfaceSecondary"
+    },
+    "image": "expo-image",
+    "blur": "expo-blur",
+    "bottom_sheet": "@gorhom/bottom-sheet",
+    "animation": "react-native-reanimated",
+    "gesture": "react-native-gesture-handler"
+  },
+  "screens": [
+    {
+      "name": "Home (Library & Garnishes)",
+      "purpose": "Browse curated cocktail recipes and visual garnish inspiration.",
+      "states": {
+        "loading": "Skeleton grids for cocktails.",
+        "empty": "No recipes found. Try a different search.",
+        "error": "Failed to load library. Tap to retry."
+      },
+      "layout": "Large iOS title 'Discover'. Top search bar. 1st section: Horizontal scroll of 'Garnish Inspiration' (glassmorphism cards over fresh mint/lime photos). 2nd section: Vertical 2-col grid of 'Signature Cocktails' with high-quality photos. Images must have vertical gradient scrims to ensure text readability."
+    },
+    {
+      "name": "Recipe Detail (Sheet)",
+      "purpose": "View cocktail photo, ingredients, steps, and user's custom images.",
+      "states": {
+        "loading": "Centered spinner.",
+        "empty": "Recipe details unavailable.",
+        "error": "Could not load recipe."
+      },
+      "layout": "Full-bleed hero image at the top with a top-to-bottom dark gradient scrim. Display font for title. Horizontal pills for tags (e.g., 'Sweet', 'Fruity'). Segmented control for 'Ingredients' vs 'Steps'. Include an 'Upload Custom Photo' icon button. Sticky 'Add to Event' glassmorphism CTA at bottom."
+    },
+    {
+      "name": "AI Generator (Mix Magic)",
+      "purpose": "Generate custom drink combinations and menu suggestions for events.",
+      "states": {
+        "loading": "Lottie animation of a cocktail shaker.",
+        "empty": "Describe an event (e.g., 'Summer Beach Wedding') to generate ideas.",
+        "error": "AI failed to generate. Please try again."
+      },
+      "layout": "Hero background photo (mobile bartender pouring) with deep purple tint and glass header. Large text input area 'Tell me about your event...'. Large primary CTA 'Generate Menu'. Results appear as a curated horizontal card list of generated drinks with reasoning."
+    },
+    {
+      "name": "Event Menu Builder",
+      "purpose": "Create and manage custom drink menus for specific events.",
+      "states": {
+        "loading": "Skeleton list of events.",
+        "empty": "Illustration of an empty bar cart. 'No events yet. Start planning!' + Create Event CTA.",
+        "error": "Could not load events."
+      },
+      "layout": "List of active events. Inside an event: Horizontal tabs for 'Cocktails', 'Mocktails', 'Wine/Beer'. Drag-and-drop or simple list of selected drinks. Sticky bottom CTA 'Share Menu / Save PDF'. Each drink item shows a thumbnail, title, and a 'Remove' icon."
+    },
+    {
+      "name": "Profile & Booking",
+      "purpose": "Manage favorites, user account, and access company booking website.",
+      "states": {
+        "loading": "Spinner.",
+        "empty": "Log in to save favorites and event menus.",
+        "error": "Failed to load profile."
+      },
+      "layout": "Simple list layout. 'Favorites' grid preview. 'Book Us' large card linking to www.themobilemixeryca.com. Settings for image uploads."
+    }
+  ],
+  "images": {
+    "recipe_lavender_spritz": {
+      "url": "https://images.unsplash.com/photo-1589378938275-947b7adf8665?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHwxfHxsYXZlbmRlciUyMGNvY2t0YWlsJTIwcHVycGxlJTIwZHJpbmt8ZW58MHx8fHwxNzg4OTQwMjUyfDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Lavender cocktail with purple liquid"
+    },
+    "recipe_lavender_garnish": {
+      "url": "https://images.unsplash.com/photo-1582269438702-578efa319292?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA3MDR8MHwxfHNlYXJjaHwyfHxsYXZlbmRlciUyMGNvY2t0YWlsJTIwcHVycGxlJTIwZHJpbmt8ZW58MHx8fHwxNzg4OTQwMjUzfDA&ixlib=rb-4.1.0&q=85",
+      "alt": "Clear cocktail glass with pink liquid and floral garnish"
+    },
+    "garnish_mint_lime": {
+      "url": "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MDV8MHwxfHNlYXJjaHwxfHxjb2NrdGFpbCUyMGdhcm5pc2glMjBmcmVzaCUyMGxpbWUlMjBtaW50fGVufDB8fHx8MTc4ODk0MDI1M3ww&ixlib=rb-4.1.0&q=85",
+      "alt": "Cocktail pouring with fresh mint and lime garnish"
+    },
+    "garnish_grid": {
+      "url": "https://images.unsplash.com/photo-1623593688280-a5aec8ac4ae7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MDV8MHwxfHNlYXJjaHwyfHxjb2NrdGFpbCUyMGdhcm5pc2glMjBmcmVzaCUyMGxpbWUlMjBtaW50fGVufDB8fHx8MTc4ODk0MDI1M3ww&ixlib=rb-4.1.0&q=85",
+      "alt": "Fresh cocktail garnishes arranged on a white surface"
+    },
+    "hero_ai_bartender": {
+      "url": "https://images.unsplash.com/photo-1621109328469-0e7c5f0c3fc7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNTl8MHwxfHNlYXJjaHwxfHxtb2JpbGUlMjBiYXJ0ZW5kZXIlMjBwb3VyaW5nJTIwZHJpbmslMjBldmVudHxlbnwwfHx8fDE3ODg5NDAyNTN8MA&ixlib=rb-4.1.0&q=85",
+      "alt": "Mobile bartender pouring a drink at an event"
+    },
+    "company_logo_placeholder": {
+      "url": "https://images.unsplash.com/photo-1706879349268-8cb3a9ae739a?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjd8MHwxfHNlYXJjaHwxfHxUaGUlMjBNb2JpbGUlMjBNaXhlcnklMjBsb2dvJTIwcG5nfGVufDB8fHx8MTc4ODk0MDI1OHww&ixlib=rb-4.1.0&q=85",
+      "alt": "The Mobile Mixery logo placeholder"
+    }
+  },
+  "haptics": {
+    "events": {
+      "tab_press": "light",
+      "primary_button_press": "medium",
+      "add_to_menu": "success",
+      "generate_ai_menu": "heavy"
+    }
+  },
+  "instructions_to_main_agent": [
+    "Strictly follow the user's 'Bright & fresh' requirement with the designated purple palette (brandPrimary: #7E22CE).",
+    "Use 'Playfair Display' for all cocktail/recipe names and menu headings to give an editorial, high-end hospitality feel, paired with 'Plus Jakarta Sans' for readability in instructions.",
+    "Implement the 'gradient-to-dark scrim pattern' on all image cards. Every cocktail image with text overlaid MUST have a vertical linear-gradient scrim (transparent to surfaceInverse) to guarantee WCAG contrast.",
+    "For the 'Recipe Detail' screen, provide an explicit 'Upload/Edit Image' button so users can add their own photos, as requested by the user.",
+    "The AI Idea Generator should have a prominent input area with an engaging loading state (e.g., shaker animation) while the menu generates.",
+    "Include a 'Book Us' section or card linking directly to www.themobilemixeryca.com."
+  ]
+}
