@@ -9,6 +9,7 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 import { ArrowLeft, Flask, Drop, Snowflake, ListChecks } from "phosphor-react-native";
 
 import { apiFetch, BatchResult, Recipe, resolveImage } from "@/src/api";
+import { usePro, FREE_GUEST_CAP } from "@/src/gating";
 import { Button } from "@/src/components/ui";
 import { useToast } from "@/src/toast";
 import { fonts, makeStyles, radius, useTheme } from "@/src/theme";
@@ -28,6 +29,7 @@ export default function BatchGuide() {
   const { colors } = useTheme();
   const router = useRouter();
   const { show } = useToast();
+  const isPro = usePro();
 
   const [recipeId, setRecipeId] = useState<string | undefined>(params.recipeId);
   const [servings, setServings] = useState("21");
@@ -89,7 +91,15 @@ export default function BatchGuide() {
         <Button
           testID="batch-calculate"
           title={selectedRecipe ? `Batch ${selectedRecipe.name}` : "Batch it"}
-          onPress={() => (recipeId ? batchM.mutate() : show("Pick a cocktail first", "info"))}
+          onPress={() => {
+            if (!recipeId) { show("Pick a cocktail first", "info"); return; }
+            if (!isPro && (parseInt(servings, 10) || 0) > FREE_GUEST_CAP) {
+              show(`Free plan is capped at ${FREE_GUEST_CAP} servings`, "info");
+              router.push("/paywall");
+              return;
+            }
+            batchM.mutate();
+          }}
           loading={batchM.isPending}
           icon={<Flask size={20} color={colors.onBrandPrimary} weight="fill" />}
           style={{ marginTop: 16 }}

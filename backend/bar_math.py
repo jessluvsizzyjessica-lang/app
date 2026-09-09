@@ -190,3 +190,33 @@ def compute_batch(name: str, glass: Optional[str], ingredients: List[str], servi
         "container": container,
         "notes": notes,
     }
+
+
+def scale_syrup(syrup: dict, multiplier: int) -> dict:
+    multiplier = max(1, int(multiplier))
+    rows = []
+    for raw in syrup.get("ingredients", []):
+        p = parse_ingredient(raw)
+        if p["kind"] == "oz" and p["amount"]:
+            total = p["amount"] * multiplier
+            rows.append({"name": p["name"], "amount_display": _oz_display(total)})
+        elif p["kind"] == "count" and p["amount"]:
+            total = p["amount"] * multiplier
+            unit = p["unit"] if p["unit"] != "count" else ""
+            rows.append({"name": p["name"], "amount_display": f"{int(round(total))}{(' ' + unit) if unit else ''}".strip()})
+        else:
+            rows.append({"name": p["name"], "amount_display": "to taste"})
+
+    yield_oz = round(syrup.get("base_yield_oz", 0) * multiplier, 1)
+    return {
+        "id": syrup["id"],
+        "name": syrup["name"],
+        "multiplier": multiplier,
+        "yield_oz": yield_oz,
+        "yield_display": _oz_display(yield_oz),
+        "shelf_life": syrup.get("shelf_life"),
+        "ingredients": rows,
+        "steps": syrup.get("steps", []),
+        "tip": syrup.get("tip"),
+    }
+

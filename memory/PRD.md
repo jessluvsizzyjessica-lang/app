@@ -38,12 +38,14 @@ App for mobile bartenders: drink recipes and garnish ideas, ideas for drink comb
 - [x] Auth modal (login/register)
 - [x] In-app account deletion (DELETE /api/auth/me, cascades) + /health endpoint
 - [x] Bar Tools (2026-06): Shopping List Calculator + Batch Guide (deterministic bar math in bar_math.py; endpoints /api/tools/shopping-list & /api/tools/batch). Entry points on Recipe detail (Batch), Event detail (Shopping cart, prefills menu+guests), and Profile "Bar Tools".
-- [x] Tested end-to-end (40/40 backend pytest, frontend flows verified)
+- [x] Mixery Pro subscriptions (2026-06): Emergent-managed RevenueCat, `pro` entitlement, Monthly $4.99 + Annual $39.99. Paywall at /paywall, gating via src/gating.tsx (free = 3 AI menus total + tools capped at 25 guests + Syrup Lab locked). Client-side entitlement only.
+- [x] Syrup Lab (2026-06): 10 signature syrups (seed) with yield + shelf life, scalable via /api/tools/syrup-scale. Pro-gated screens at /tools/syrups and /tools/syrup/[id].
+- [x] Tested end-to-end (backend pytest + frontend flows verified)
 
 ## Backlog / Remaining
-- P1: RevenueCat subscriptions (paywall) — queued, awaiting user answers on tiers/limits
-- P1: Save/share event menu as PDF
+- P1: Save/share event menu + batch/shopping sheet as PDF
 - P1: Push individual AI drinks into an existing event menu
 - P2: Edit event details after creation
-- P2: Syrup Lab (signature syrups yields/shelf-life) from Batch Bar Bible
+- P2: Garnish prep timeline (72h/24h/day-of) from Batch Bar Bible
 - P2: Dark theme
+- Store-side: user uploads App Store/Play IAP credentials + creates matching products for real purchases (see /app/memory/revenuecat.md & payments panel FAQ)

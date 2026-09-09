@@ -10,6 +10,7 @@ import { ArrowLeft, ShoppingCartSimple, Check, Confetti } from "phosphor-react-n
 
 import { apiFetch, EventT, Recipe, resolveImage, ShoppingResult } from "@/src/api";
 import { useAuth } from "@/src/auth";
+import { usePro, FREE_GUEST_CAP } from "@/src/gating";
 import { Button } from "@/src/components/ui";
 import { useToast } from "@/src/toast";
 import { fonts, makeStyles, radius, useTheme } from "@/src/theme";
@@ -22,6 +23,7 @@ export default function ShoppingCalculator() {
   const router = useRouter();
   const { show } = useToast();
   const { isAuthed } = useAuth();
+  const isPro = usePro();
 
   const [guests, setGuests] = useState(params.guests || "50");
   const [perGuest, setPerGuest] = useState("3");
@@ -106,7 +108,15 @@ export default function ShoppingCalculator() {
         <Button
           testID="shopping-calculate"
           title="Build Shopping List"
-          onPress={() => (selected.length ? calcM.mutate() : show("Pick at least one drink", "info"))}
+          onPress={() => {
+            if (!selected.length) { show("Pick at least one drink", "info"); return; }
+            if (!isPro && (parseInt(guests, 10) || 0) > FREE_GUEST_CAP) {
+              show(`Free plan is capped at ${FREE_GUEST_CAP} guests`, "info");
+              router.push("/paywall");
+              return;
+            }
+            calcM.mutate();
+          }}
           loading={calcM.isPending}
           icon={<ShoppingCartSimple size={20} color={colors.onBrandPrimary} weight="fill" />}
           style={{ marginTop: 16 }}

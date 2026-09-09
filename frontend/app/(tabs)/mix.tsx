@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, TextInput, View } from "react-native";
+import { Pressable, Text, TextInput, View } from "react-native";
 import { Image } from "expo-image";
 import { LinearGradient } from "expo-linear-gradient";
 import { KeyboardAwareScrollView } from "react-native-keyboard-controller";
@@ -11,6 +11,7 @@ import { Martini, Sparkle, FloppyDisk } from "phosphor-react-native";
 import { AIMenu, apiFetch } from "@/src/api";
 import { Button } from "@/src/components/ui";
 import { useAuth } from "@/src/auth";
+import { useAiQuota } from "@/src/gating";
 import { useToast } from "@/src/toast";
 import { queryClient } from "@/src/query-client";
 import { fonts, makeStyles, radius, useTheme } from "@/src/theme";
@@ -31,12 +32,15 @@ export default function MixMagic() {
   const [guests, setGuests] = useState("");
   const [vibe, setVibe] = useState("");
 
+  const { canUseAI, remaining, isPro, record } = useAiQuota();
+
   const genM = useMutation({
     mutationFn: () =>
       apiFetch<AIMenu>("/ai/generate-menu", {
         method: "POST",
         body: { event_description: desc, guest_count: guests ? parseInt(guests, 10) : undefined, vibe: vibe || undefined },
       }),
+    onSuccess: () => record(),
     onError: (e: any) => show(e?.message || "AI failed. Try again.", "error"),
   });
 
@@ -128,11 +132,23 @@ export default function MixMagic() {
         <Button
           testID="ai-generate-button"
           title={genM.isPending ? "Shaking up ideas..." : "Generate Menu"}
-          onPress={() => desc.trim().length >= 3 ? genM.mutate() : show("Describe your event first", "info")}
+          onPress={() => {
+            if (desc.trim().length < 3) { show("Describe your event first", "info"); return; }
+            if (!canUseAI) { router.push("/paywall"); return; }
+            genM.mutate();
+          }}
           loading={genM.isPending}
           icon={<Martini size={20} color={colors.onBrandPrimary} weight="fill" />}
           style={{ marginTop: 8 }}
         />
+        {!isPro && (
+          <Pressable testID="ai-quota" onPress={() => router.push("/paywall")} style={styles.quotaRow}>
+            <Text style={styles.quotaText}>
+              {remaining > 0 ? `${remaining} free menu${remaining === 1 ? "" : "s"} left · ` : "Free menus used · "}
+              <Text style={styles.quotaLink}>Go Pro for unlimited</Text>
+            </Text>
+          </Pressable>
+        )}
       </View>
 
       {genM.isPending && (
@@ -218,6 +234,9 @@ const useStyles = makeStyles((colors) => ({
   },
   rowInputs: { flexDirection: "row", gap: 12 },
   half: { flex: 1 },
+  quotaRow: { alignItems: "center", paddingVertical: 12 },
+  quotaText: { color: colors.muted, fontFamily: fonts.text, fontSize: 13 },
+  quotaLink: { color: colors.brandPrimary, fontWeight: "700" },
   loadingBox: { padding: 24, alignItems: "center" },
   loadingText: { color: colors.muted, fontFamily: fonts.text, fontSize: 14, textAlign: "center" },
   results: { padding: 16, gap: 12 },

@@ -19,8 +19,8 @@ from pydantic import BaseModel, Field, EmailStr
 
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 
-from seed_data import SEED_RECIPES, SEED_GARNISHES
-from bar_math import compute_shopping_list, compute_batch, POURS_PER_GALLON
+from seed_data import SEED_RECIPES, SEED_GARNISHES, SEED_SYRUPS
+from bar_math import compute_shopping_list, compute_batch, scale_syrup, POURS_PER_GALLON
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / ".env")
@@ -111,6 +111,11 @@ class ShoppingBody(BaseModel):
 class BatchBody(BaseModel):
     recipe_id: str
     servings: int = Field(ge=1, le=2000)
+
+
+class SyrupScaleBody(BaseModel):
+    syrup_id: str
+    multiplier: int = Field(default=1, ge=1, le=20)
 
 
 # ---------------------------------------------------------------------------
@@ -536,6 +541,27 @@ async def batch(body: BatchBody):
     return compute_batch(r["name"], r.get("glass"), r.get("ingredients", []), body.servings)
 
 
+@api.get("/syrups")
+async def list_syrups():
+    return await db.syrups.find({}, {"_id": 0}).to_list(100)
+
+
+@api.get("/syrups/{syrup_id}")
+async def get_syrup(syrup_id: str):
+    doc = await db.syrups.find_one({"id": syrup_id}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Syrup not found")
+    return doc
+
+
+@api.post("/tools/syrup-scale")
+async def syrup_scale(body: SyrupScaleBody):
+    doc = await db.syrups.find_one({"id": body.syrup_id}, {"_id": 0})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Syrup not found")
+    return scale_syrup(doc, body.multiplier)
+
+
 # ---------------------------------------------------------------------------
 # Company info
 # ---------------------------------------------------------------------------
@@ -565,6 +591,9 @@ async def startup():
     if await db.garnishes.count_documents({}) == 0:
         await db.garnishes.insert_many([dict(g) for g in SEED_GARNISHES])
         logger.info("Seeded %d garnishes", len(SEED_GARNISHES))
+    if await db.syrups.count_documents({}) == 0:
+        await db.syrups.insert_many([dict(s) for s in SEED_SYRUPS])
+        logger.info("Seeded %d syrups", len(SEED_SYRUPS))
 
     try:
         await run_in_threadpool(_init_storage)

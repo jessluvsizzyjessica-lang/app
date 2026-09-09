@@ -1,0 +1,41 @@
+{
+  "summary": "Iteration 4 validates RevenueCat gating + Syrup Lab. Backend: 50/50 pytest passing (10 new syrup tests + 40 regression). New /app/backend/tests/test_syrups.py covers: GET /api/syrups returns exactly 10 syrups with full shape (id/name/color/base_yield_oz/shelf_life/ingredients/steps/tip) and includes expected ids (demerara, lavender, honey-ginger, hibiscus, quick-orgeat); GET /api/syrups/{id} returns detail (demerara base_yield_oz=16) and 404 for unknown; POST /api/tools/syrup-scale demerara x3 -> yield_oz=48, demerara sugar 48 oz, water 24 oz; default multiplier=1 (lavender yield 12); boundary multiplier=20 (yield 320); multiplier=0 and 21 both return 422; unknown syrup 404. Regression (recipes, auth incl. seeded bar@test.com + DELETE /auth/me cascade, favorites, events, /ai/generate-menu, /tools/shopping-list, /tools/batch, /upload, /files/{path}) all green. Frontend (Expo web, 390x844): (1) /paywall renders Mixery Pro benefits, Annual (BEST VALUE) + Monthly plan cards with priceStrings from RC Test Store offerings, plan-selection radios, 'Log in to Subscribe' (guest state), paywall-restore button, and 'Preview mode: purchases run on the RevenueCat Test Store (simulated)' hint — NO native Alert used. confirm-purchase / confirm-cancel testIDs exist in code (paywall.tsx:183-184) but render only inside the custom confirm modal after tapping a plan while logged-in and confirming — not visible in guest state (expected). (2) /tools/syrups and /tools/syrup/demerara both render ProLock 'Unlock the Syrup Lab' with testID prolock-upgrade for non-Pro. (3) Mix tab shows ai-quota text '3 free menus left · Go Pro for unlimited' and tapping routes to /paywall. (4) Profile shows go-pro-card and tool-syrups row with PRO pill. (5) Shopping tool with guests=30 (>25) after picking a recipe routes to /paywall via shopping-calculate — verified end-URL. (6) Batch tool with servings=30 (>25) after picking a chip routes to /paywall via batch-calculate — verified end-URL. No React Native red-screen. No new deprecated packages. Pre-existing RN-Web warnings (props.pointerEvents / shadow*) still present (third-party library noise).",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "global", "issues": ["Pre-existing (non-blocking) RN-Web warnings: 'props.pointerEvents is deprecated' and '\"shadow*\" style props are deprecated'. Originate in phosphor-react-native / expo-linear-gradient — not introduced by this iteration."]}
+    ],
+    "react_native_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_syrups.py",
+    "/app/backend/tests/test_bar_tools.py",
+    "/app/backend/tests/backend_test.py",
+    "/app/backend/tests/test_delete_account.py",
+    "/app/test_reports/pytest/syrup_results.xml",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Informational: Paywall priceStrings in the web preview come from RevenueCat's Test Store offerings (Annual $79.99/yr, Monthly $9.99/mo), not the $39.99/$4.99 mentioned in the request. If those are the intended production prices, verify the App Store Connect / Play Console product prices attached to the 'pro' entitlement in the RevenueCat dashboard — no code change needed."
+  ],
+  "critical_code_review_comments": [
+    "bar_math.scale_syrup correctly multiplies each parsed oz ingredient and base_yield_oz by the multiplier and preserves non-oz/to-taste rows.",
+    "SyrupScaleBody Field(ge=1, le=20) enforces 1..20 with 422 outside; default=1 works when multiplier omitted.",
+    "Server routes /syrups, /syrups/{id}, /tools/syrup-scale correctly exclude Mongo _id via find projection {'_id': 0}.",
+    "SEED_SYRUPS contains exactly 10 entries; startup seeder is idempotent (count check before insert_many).",
+    "Frontend gating is client-side only via usePro() + mm_ai_used AsyncStorage key — no backend is_pro field (confirmed with review request context). AI quota, 25-guest cap, and Syrup Lab lock are enforced in the frontend and gracefully route to /paywall.",
+    "ProLock component exposes testID prolock-upgrade on the Go Pro button; used consistently by /tools/syrups and /tools/syrup/[id].",
+    "Paywall implements a custom in-app confirm modal (confirm-purchase / confirm-cancel) instead of a native Alert — meets the review requirement."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_syrups.py (new — 10 pytest cases)"
+  ],
+  "success_rate": {"backend": "100% (50/50 pytest)", "frontend": "100% — all 8 review-request flows verified"},
+  "seed_data_creation": "Backend test suite creates ephemeral TEST_*@example.com users self-managed via existing fixtures. Seeded bar@test.com untouched.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Backend URL: EXPO_PUBLIC_BACKEND_URL=https://pour-play-3.preview.emergentagent.com. Syrup endpoints (all public): GET /api/syrups, GET /api/syrups/{id}, POST /api/tools/syrup-scale {syrup_id, multiplier(1..20, default 1)}. Frontend gating: AsyncStorage key 'mm_ai_used' (AI quota), 25-guest/servings cap on batch+shopping tools, usePro() from src/revenuecat.tsx. testIDs: paywall-restore, confirm-purchase, confirm-cancel (modal-only), ai-quota, go-pro-card, tool-syrups, prolock-upgrade, shopping-calculate, batch-calculate, shopping-pick-{id}, batch-recipe-{id}. In web preview RC uses the Test Store — real purchases won't complete headlessly, so confirm-purchase/confirm-cancel are only reachable by logging in first then tapping a plan; verify presence via code, not runtime, unless authenticated. Prices shown in preview ($9.99/$79.99) come from RC offerings, not hardcoded.",
+  "rca_of_issue": "N/A — feature ships cleanly. All 8 acceptance criteria in the review request met."
+}

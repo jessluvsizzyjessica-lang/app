@@ -7,11 +7,12 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import * as WebBrowser from "expo-web-browser";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
-import { Globe, SignOut, Heart, CaretRight, ForkKnife, Trash, WarningCircle, Flask, ShoppingCartSimple } from "phosphor-react-native";
+import { Globe, SignOut, Heart, CaretRight, ForkKnife, Trash, WarningCircle, Flask, ShoppingCartSimple, Crown, TestTube } from "phosphor-react-native";
 
 import { apiFetch, Recipe, resolveImage } from "@/src/api";
 import { Button } from "@/src/components/ui";
 import { useAuth } from "@/src/auth";
+import { usePro } from "@/src/gating";
 import { useToast } from "@/src/toast";
 import { queryClient } from "@/src/query-client";
 import { fonts, makeStyles, radius, useTheme } from "@/src/theme";
@@ -27,6 +28,7 @@ export default function Profile() {
   const { user, isAuthed, logout } = useAuth();
   const router = useRouter();
   const { show } = useToast();
+  const isPro = usePro();
 
   const favQ = useQuery({
     queryKey: ["favorites"],
@@ -122,6 +124,30 @@ export default function Profile() {
         </View>
       )}
 
+      {/* Pro status / upsell */}
+      <View style={styles.section}>
+        {isPro ? (
+          <View style={styles.proActive}>
+            <Crown size={24} color={colors.warning} weight="fill" />
+            <View style={{ flex: 1 }}>
+              <Text style={styles.proActiveTitle}>Mixery Pro</Text>
+              <Text style={styles.muted}>Unlimited AI menus, full tools & Syrup Lab unlocked.</Text>
+            </View>
+          </View>
+        ) : (
+          <Pressable testID="go-pro-card" onPress={() => router.push("/paywall")} style={styles.proCard}>
+            <LinearGradient colors={[colors.brandPrimary, colors.brandSecondary]} style={styles.proGrad} start={{ x: 0, y: 0 }} end={{ x: 1, y: 1 }}>
+              <Crown size={26} color="#FFFFFF" weight="fill" />
+              <View style={{ flex: 1 }}>
+                <Text style={styles.proTitle}>Go Pro</Text>
+                <Text style={styles.proSub}>Unlimited AI menus, full batch tools & Syrup Lab</Text>
+              </View>
+              <CaretRight size={18} color="#FFFFFF" weight="bold" />
+            </LinearGradient>
+          </Pressable>
+        )}
+      </View>
+
       {/* Bar Tools */}
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>Bar Tools</Text>
@@ -138,6 +164,17 @@ export default function Profile() {
           <View style={{ flex: 1 }}>
             <Text style={styles.infoTitle}>Shopping List Calculator</Text>
             <Text style={styles.muted}>Enter guests & drinks, get an exact shopping list.</Text>
+          </View>
+          <CaretRight size={16} color={colors.muted} weight="bold" />
+        </Pressable>
+        <Pressable testID="tool-syrups" onPress={() => router.push("/tools/syrups")} style={styles.infoRow}>
+          <View style={styles.infoIcon}><TestTube size={20} color={colors.brandPrimary} weight="fill" /></View>
+          <View style={{ flex: 1 }}>
+            <View style={styles.rowInline}>
+              <Text style={styles.infoTitle}>Syrup Lab</Text>
+              {!isPro && <View style={styles.proPill}><Text style={styles.proPillText}>PRO</Text></View>}
+            </View>
+            <Text style={styles.muted}>10 signature syrups with yields, shelf life & scaling.</Text>
           </View>
           <CaretRight size={16} color={colors.muted} weight="bold" />
         </Pressable>
@@ -239,6 +276,15 @@ const useStyles = makeStyles((colors) => ({
   infoRow: { flexDirection: "row", alignItems: "center", gap: 12, backgroundColor: colors.surfaceSecondary, borderRadius: radius.md, padding: 14, borderWidth: 1, borderColor: colors.border, marginBottom: 10 },
   infoIcon: { width: 40, height: 40, borderRadius: 20, backgroundColor: colors.brandTertiary, alignItems: "center", justifyContent: "center" },
   infoTitle: { color: colors.onSurface, fontFamily: fonts.text, fontSize: 15, fontWeight: "700" },
+  rowInline: { flexDirection: "row", alignItems: "center", gap: 8 },
+  proPill: { backgroundColor: colors.brandPrimary, paddingHorizontal: 7, paddingVertical: 2, borderRadius: radius.pill },
+  proPillText: { color: colors.onBrandPrimary, fontFamily: fonts.text, fontSize: 9, fontWeight: "800", letterSpacing: 0.5 },
+  proCard: { borderRadius: radius.lg, overflow: "hidden" },
+  proGrad: { flexDirection: "row", alignItems: "center", gap: 14, padding: 18 },
+  proTitle: { color: "#FFFFFF", fontFamily: fonts.display, fontSize: 22, fontWeight: "700" },
+  proSub: { color: "rgba(255,255,255,0.9)", fontFamily: fonts.text, fontSize: 13, marginTop: 2 },
+  proActive: { flexDirection: "row", alignItems: "center", gap: 14, backgroundColor: colors.surfaceSecondary, borderRadius: radius.lg, padding: 16, borderWidth: 1, borderColor: colors.border },
+  proActiveTitle: { color: colors.onSurface, fontFamily: fonts.display, fontSize: 18, fontWeight: "700" },
   deleteRow: { flexDirection: "row", alignItems: "center", justifyContent: "center", gap: 8, paddingVertical: 12 },
   deleteText: { color: colors.error, fontFamily: fonts.text, fontSize: 14, fontWeight: "700" },
   deleteSheet: { padding: 24, alignItems: "center" },

@@ -12,8 +12,15 @@ import { ErrorBoundary } from "@/src/components/error-boundary";
 import { queryClient } from "@/src/query-client";
 import { AuthProvider } from "@/src/auth";
 import { ToastProvider } from "@/src/toast";
+import { initializeRevenueCat, SubscriptionProvider } from "@/src/revenuecat";
 
 LogBox.ignoreAllLogs(true);
+
+try {
+  initializeRevenueCat();
+} catch (err) {
+  console.warn("RevenueCat unavailable:", err);
+}
 
 export default function RootLayout() {
   const [fontsLoaded] = useFonts({
@@ -32,6 +39,7 @@ export default function RootLayout() {
           <SafeAreaProvider>
             <QueryClientProvider client={queryClient}>
               <AuthProvider>
+                <SubscriptionProvider>
                 <BottomSheetModalProvider>
                   <ToastProvider>
                     <StatusBar style="dark" />
@@ -43,10 +51,14 @@ export default function RootLayout() {
                       <Stack.Screen name="event/new" options={{ presentation: "modal" }} />
                       <Stack.Screen name="tools/batch" options={{ presentation: "card" }} />
                       <Stack.Screen name="tools/shopping" options={{ presentation: "card" }} />
+                      <Stack.Screen name="tools/syrups" options={{ presentation: "card" }} />
+                      <Stack.Screen name="tools/syrup/[id]" options={{ presentation: "card" }} />
+                      <Stack.Screen name="paywall" options={{ presentation: "modal" }} />
                       <Stack.Screen name="auth" options={{ presentation: "modal" }} />
                     </Stack>
                   </ToastProvider>
                 </BottomSheetModalProvider>
+                </SubscriptionProvider>
               </AuthProvider>
             </QueryClientProvider>
           </SafeAreaProvider>
