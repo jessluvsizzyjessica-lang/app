@@ -106,3 +106,37 @@ export type AIDrink = {
   why: string;
 };
 export type AIMenu = { menu_title: string; summary: string; drinks: AIDrink[] };
+
+export type ShoppingItem = { name: string; total_oz?: number; amount_display: string; bottles_display?: string };
+export type ShoppingResult = {
+  guests: number;
+  drinks_per_guest: number;
+  total_drinks: number;
+  per_recipe: { id: string; name: string; servings: number }[];
+  shopping: ShoppingItem[];
+  counts: { name: string; amount_display: string }[];
+  extras: string[];
+};
+
+export type BatchRow = {
+  name: string;
+  per_serving: string;
+  total_oz: number;
+  amount_display: string;
+  bottles_display: string;
+  kind: "oz" | "count" | "to_taste";
+};
+export type BatchResult = {
+  name: string;
+  glass?: string | null;
+  servings: number;
+  ingredients: BatchRow[];
+  concentrate_oz: number;
+  dilution_oz: number;
+  batch_volume_oz: number;
+  batch_volume_display: string;
+  gallons: number;
+  pours: number;
+  container: string;
+  notes: string[];
+};

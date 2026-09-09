@@ -20,6 +20,7 @@ from pydantic import BaseModel, Field, EmailStr
 from emergentintegrations.llm.chat import LlmChat, UserMessage
 
 from seed_data import SEED_RECIPES, SEED_GARNISHES
+from bar_math import compute_shopping_list, compute_batch, POURS_PER_GALLON
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / ".env")
@@ -99,6 +100,17 @@ class AIGenerateBody(BaseModel):
     event_description: str = Field(min_length=3, max_length=1000)
     guest_count: Optional[int] = None
     vibe: Optional[str] = None
+
+
+class ShoppingBody(BaseModel):
+    guests: int = Field(ge=1, le=2000)
+    drinks_per_guest: float = Field(default=2.0, ge=0.5, le=20)
+    recipe_ids: List[str] = Field(min_length=1)
+
+
+class BatchBody(BaseModel):
+    recipe_id: str
+    servings: int = Field(ge=1, le=2000)
 
 
 # ---------------------------------------------------------------------------
@@ -483,6 +495,45 @@ async def get_file(path: str):
     except Exception:
         raise HTTPException(status_code=404, detail="File not found")
     return Response(content=content, media_type=content_type, headers={"Cache-Control": "public, max-age=86400"})
+
+
+# ---------------------------------------------------------------------------
+# Routes: Bar Tools (shopping list + batch) — public, deterministic math
+# ---------------------------------------------------------------------------
+@api.post("/tools/shopping-list")
+async def shopping_list(body: ShoppingBody):
+    recipes = await db.recipes.find({"id": {"$in": body.recipe_ids}}, {"_id": 0}).to_list(500)
+    if not recipes:
+        raise HTTPException(status_code=404, detail="No matching recipes found")
+
+    total_drinks = int(round(body.guests * body.drinks_per_guest))
+    n = len(recipes)
+    base = total_drinks // n
+    remainder = total_drinks % n
+
+    per_recipe = []
+    payload = []
+    for i, r in enumerate(recipes):
+        servings = base + (1 if i < remainder else 0)
+        per_recipe.append({"id": r["id"], "name": r["name"], "servings": servings})
+        payload.append({"name": r["name"], "servings": servings, "ingredients": r.get("ingredients", [])})
+
+    result = compute_shopping_list(payload)
+    return {
+        "guests": body.guests,
+        "drinks_per_guest": body.drinks_per_guest,
+        "total_drinks": total_drinks,
+        "per_recipe": per_recipe,
+        **result,
+    }
+
+
+@api.post("/tools/batch")
+async def batch(body: BatchBody):
+    r = await db.recipes.find_one({"id": body.recipe_id}, {"_id": 0})
+    if not r:
+        raise HTTPException(status_code=404, detail="Recipe not found")
+    return compute_batch(r["name"], r.get("glass"), r.get("ingredients", []), body.servings)
 
 
 # ---------------------------------------------------------------------------

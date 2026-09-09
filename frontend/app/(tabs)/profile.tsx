@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import * as WebBrowser from "expo-web-browser";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetView } from "@gorhom/bottom-sheet";
-import { Globe, SignOut, Heart, CaretRight, ForkKnife, Trash, WarningCircle } from "phosphor-react-native";
+import { Globe, SignOut, Heart, CaretRight, ForkKnife, Trash, WarningCircle, Flask, ShoppingCartSimple } from "phosphor-react-native";
 
 import { apiFetch, Recipe, resolveImage } from "@/src/api";
 import { Button } from "@/src/components/ui";
@@ -121,6 +121,27 @@ export default function Profile() {
           )}
         </View>
       )}
+
+      {/* Bar Tools */}
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Bar Tools</Text>
+        <Pressable testID="tool-batch" onPress={() => router.push("/tools/batch")} style={styles.infoRow}>
+          <View style={styles.infoIcon}><Flask size={20} color={colors.brandPrimary} weight="fill" /></View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.infoTitle}>Batch Guide</Text>
+            <Text style={styles.muted}>Scale any cocktail to a big-batch dispenser with bottles & dilution.</Text>
+          </View>
+          <CaretRight size={16} color={colors.muted} weight="bold" />
+        </Pressable>
+        <Pressable testID="tool-shopping" onPress={() => router.push("/tools/shopping")} style={styles.infoRow}>
+          <View style={styles.infoIcon}><ShoppingCartSimple size={20} color={colors.brandPrimary} weight="fill" /></View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.infoTitle}>Shopping List Calculator</Text>
+            <Text style={styles.muted}>Enter guests & drinks, get an exact shopping list.</Text>
+          </View>
+          <CaretRight size={16} color={colors.muted} weight="bold" />
+        </Pressable>
+      </View>
 
       {/* Book Us */}
       <View style={styles.section}>

@@ -5,7 +5,7 @@ import { useLocalSearchParams, useRouter } from "expo-router";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetFlatList } from "@gorhom/bottom-sheet";
-import { ArrowLeft, Plus, TrashSimple, ShareNetwork } from "phosphor-react-native";
+import { ArrowLeft, Plus, TrashSimple, ShareNetwork, ShoppingCartSimple } from "phosphor-react-native";
 
 import { apiFetch, EventT, Recipe, resolveImage } from "@/src/api";
 import { Button } from "@/src/components/ui";
@@ -104,9 +104,14 @@ export default function EventDetail() {
         <Pressable testID="event-back" onPress={() => router.back()} style={styles.iconBtn}>
           <ArrowLeft size={22} color={colors.onSurface} weight="bold" />
         </Pressable>
-        <Pressable testID="delete-event" onPress={() => deleteM.mutate()} style={styles.iconBtn}>
-          <TrashSimple size={20} color={colors.error} weight="bold" />
-        </Pressable>
+        <View style={{ flexDirection: "row", gap: 10 }}>
+          <Pressable testID="event-shopping" onPress={() => router.push(`/tools/shopping?eventId=${id}`)} style={styles.iconBtn}>
+            <ShoppingCartSimple size={20} color={colors.brandPrimary} weight="fill" />
+          </Pressable>
+          <Pressable testID="delete-event" onPress={() => deleteM.mutate()} style={styles.iconBtn}>
+            <TrashSimple size={20} color={colors.error} weight="bold" />
+          </Pressable>
+        </View>
       </View>
 
       <View style={styles.header}>

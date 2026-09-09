@@ -36,11 +36,14 @@ App for mobile bartenders: drink recipes and garnish ideas, ideas for drink comb
 - [x] Events: login gate, create modal, list, detail with category chips + add-drinks sheet + remove/share/delete
 - [x] Profile: account/login/logout, favorites preview, Book Us card, coordinator info
 - [x] Auth modal (login/register)
-- [x] Tested end-to-end (23/23 backend pytest, frontend flows verified)
+- [x] In-app account deletion (DELETE /api/auth/me, cascades) + /health endpoint
+- [x] Bar Tools (2026-06): Shopping List Calculator + Batch Guide (deterministic bar math in bar_math.py; endpoints /api/tools/shopping-list & /api/tools/batch). Entry points on Recipe detail (Batch), Event detail (Shopping cart, prefills menu+guests), and Profile "Bar Tools".
+- [x] Tested end-to-end (40/40 backend pytest, frontend flows verified)
 
 ## Backlog / Remaining
+- P1: RevenueCat subscriptions (paywall) — queued, awaiting user answers on tiers/limits
 - P1: Save/share event menu as PDF
 - P1: Push individual AI drinks into an existing event menu
 - P2: Edit event details after creation
-- P2: Recipe scaling by guest count
+- P2: Syrup Lab (signature syrups yields/shelf-life) from Batch Bar Bible
 - P2: Dark theme

@@ -41,6 +41,8 @@ export default function RootLayout() {
                       <Stack.Screen name="recipe/[id]" options={{ presentation: "card" }} />
                       <Stack.Screen name="event/[id]" options={{ presentation: "card" }} />
                       <Stack.Screen name="event/new" options={{ presentation: "modal" }} />
+                      <Stack.Screen name="tools/batch" options={{ presentation: "card" }} />
+                      <Stack.Screen name="tools/shopping" options={{ presentation: "card" }} />
                       <Stack.Screen name="auth" options={{ presentation: "modal" }} />
                     </Stack>
                   </ToastProvider>

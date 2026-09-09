@@ -7,7 +7,7 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import * as ImagePicker from "expo-image-picker";
 import BottomSheet, { BottomSheetBackdrop, BottomSheetFlatList } from "@gorhom/bottom-sheet";
-import { ArrowLeft, Heart, Camera, Plus, CalendarStar } from "phosphor-react-native";
+import { ArrowLeft, Heart, Camera, Plus, CalendarStar, Flask } from "phosphor-react-native";
 
 import { API_BASE, apiFetch, EventT, getToken, Recipe, resolveImage } from "@/src/api";
 import { Button } from "@/src/components/ui";
@@ -255,12 +255,18 @@ export default function RecipeDetail() {
 
       {/* Sticky CTA */}
       <View style={[styles.footer, { paddingBottom: insets.bottom + 12 }]}>
-        <Button
-          testID="add-to-event"
-          title="Add to Event"
-          onPress={openAddToEvent}
-          icon={<Plus size={20} color={colors.onBrandPrimary} weight="bold" />}
-        />
+        <Pressable testID="recipe-batch" onPress={() => router.push(`/tools/batch?recipeId=${id}`)} style={styles.batchBtn}>
+          <Flask size={22} color={colors.brandPrimary} weight="fill" />
+          <Text style={styles.batchBtnText}>Batch</Text>
+        </Pressable>
+        <View style={{ flex: 1 }}>
+          <Button
+            testID="add-to-event"
+            title="Add to Event"
+            onPress={openAddToEvent}
+            icon={<Plus size={20} color={colors.onBrandPrimary} weight="bold" />}
+          />
+        </View>
       </View>
 
       <BottomSheet ref={sheetRef} index={-1} snapPoints={["55%"]} enablePanDownToClose backdropComponent={renderBackdrop} backgroundStyle={{ backgroundColor: colors.surface }}>
@@ -342,12 +348,26 @@ const useStyles = makeStyles((colors) => ({
     left: 0,
     right: 0,
     bottom: 0,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 12,
     paddingHorizontal: 16,
     paddingTop: 12,
     backgroundColor: colors.surface,
     borderTopWidth: 1,
     borderTopColor: colors.border,
   },
+  batchBtn: {
+    height: 54,
+    paddingHorizontal: 16,
+    borderRadius: radius.md,
+    backgroundColor: colors.brandTertiary,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
+    gap: 6,
+  },
+  batchBtnText: { color: colors.brandPrimary, fontFamily: fonts.text, fontSize: 15, fontWeight: "700" },
   sheetHead: { paddingHorizontal: 16, paddingTop: 4, paddingBottom: 8 },
   sheetTitle: { color: colors.onSurface, fontFamily: fonts.display, fontSize: 22, fontWeight: "700" },
   eventRow: { flexDirection: "row", alignItems: "center", gap: 12, backgroundColor: colors.surfaceSecondary, borderRadius: radius.md, padding: 14, borderWidth: 1, borderColor: colors.border },

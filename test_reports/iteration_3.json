@@ -1,0 +1,37 @@
+{
+  "summary": "Iteration 3 validates the two new bar tools: Shopping List Calculator and Batch Guide. Backend: 40/40 pytest passing (27 regression + 13 new bar-tools). New /app/backend/tests/test_bar_tools.py covers: (1) /api/tools/shopping-list — garden-mojito+citrus-paloma+berry-basil-smash for 50 guests @3/guest returns total_drinks=150, per_recipe [50,50,50], white rum ~100 oz (≈4 bottles), blanco tequila ~100 oz; (2) uneven split remainder distributed (5 guests * 2 drinks over 3 recipes -> [4,3,3]); (3) validation for guests>=1, drinks_per_guest 0.5-20, recipe_ids min_length=1 (all return 422); (4) 404 for unknown recipe_ids only; (5) /api/tools/batch citrus-paloma @63 -> blanco tequila 126.0 oz, dilution 70.9 oz, gallons 2.77, container '1 × 3-gallon dispenser / Cambro', 3 notes; (6) container tier logic (10 servings -> 1-gallon; 500 servings -> 3-gallon multi-dispenser); (7) servings validation (0 -> 422, 5000 -> 422); (8) 404 unknown recipe_id. Regression suite (recipes, auth, favorites, events, AI menu, upload, delete-account) all still green. Frontend (Expo web, 390x844): (a) deep link /tools/batch?recipeId=citrus-paloma preselects the chip, quick-63 populates the input, Batch button shows 63 Servings / 2.77 gal / 70.9 oz Dilution / '1 × 3-gallon dispenser' / Blanco Tequila 126.0 oz row rendered via batch-ing-0. (b) Shopping List — guests 50 + per-guest 3, picked 3 library drinks via shopping-pick-*, shopping-calculate renders '150 drinks for 50 guests', shopping-item-0 populated with bottle counts. (c) Profile Bar Tools rows tool-batch and tool-shopping navigate to /tools/batch and /tools/shopping respectively (verified as guest — no auth required). (d) Recipe detail /recipe/citrus-paloma exposes recipe-batch which navigates to /tools/batch?recipeId=citrus-paloma and the chip is preselected. (e) Event detail event-shopping topbar cart on a freshly-seeded event (2 library items, guest_count=40) opens /tools/shopping?eventId=... with guests prefilled to 40 and 'Drinks on the menu (2)' auto-selected — computed 120 drinks for 40 guests successfully. No React Native red-screen errors. No deprecated Expo packages detected (expo-av/expo-barcode-scanner/expo-background-fetch not in use). Pre-existing RN-Web deprecation warnings (props.pointerEvents / shadow*) persist but are third-party library noise.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "global", "issues": ["Pre-existing (non-blocking) RN-Web warnings: 'props.pointerEvents is deprecated' and '\"shadow*\" style props are deprecated'. Originate in phosphor-react-native / expo-linear-gradient — not introduced by this iteration."]}
+    ],
+    "react_native_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/test_bar_tools.py",
+    "/app/backend/tests/backend_test.py",
+    "/app/backend/tests/test_delete_account.py",
+    "/app/test_reports/pytest/pytest_results.xml",
+    "/app/test_reports/pytest/bar_tools_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "bar_math.compute_shopping_list correctly aggregates oz-based ingredients across selected recipes and distributes odd remainders via base+1 for the first N recipes (verified with 10/3 -> [4,3,3]).",
+    "bar_math.compute_batch uses fixed 25% dilution (concentrate * 0.25). Container tiers: <=1gal one-dispenser, <=3gal one 3-gal, else ceil(gal/3) 3-gal dispensers. Matches spec.",
+    "Pydantic constraints on ShoppingBody/BatchBody enforce guests>=1, drinks_per_guest 0.5-20, recipe_ids min_length=1, servings 1-2000 — all return 422 as expected.",
+    "tools/shopping.tsx correctly falls back gracefully when event items have recipe_id=null (AI-generated drinks are filtered out by .filter(Boolean)) — event with only AI drinks yields 0 preselected which is the intended behaviour ('library drinks only').",
+    "tools/batch.tsx keeps servings as string state; parseInt fallback to 1 avoids NaN in payload. TextInput uses number-pad keyboard on mobile — correct.",
+    "Both tool screens use KeyboardAwareScrollView + Pressable + StyleSheet-generated makeStyles — no HTML tags, no raw text outside <Text>. testIDs present on all interactive elements (batch-back, batch-recipe-*, batch-servings, batch-quick-*, batch-calculate, batch-ing-*, shopping-back, shopping-guests, shopping-per-guest, shopping-pick-*, shopping-calculate, shopping-item-*)."
+  ],
+  "updated_files": [
+    "/app/backend/tests/test_bar_tools.py (new — 13 pytest cases)"
+  ],
+  "success_rate": {"backend": "100% (40/40 pytest)", "frontend": "100% — all 5 flows in the review request verified"},
+  "seed_data_creation": "Temporarily created TEST_ShopEvent on bar@test.com with 2 library items to verify event->shopping deep-link prefill; deleted at end of test (200 OK). Backend test suite creates ephemeral TEST_*@example.com users self-managed via existing fixtures. Seeded bar@test.com untouched.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "Bar tools are PUBLIC (no auth). Backend URL: EXPO_PUBLIC_BACKEND_URL=https://pour-play-3.preview.emergentagent.com. Endpoints: POST /api/tools/shopping-list {guests, drinks_per_guest, recipe_ids[]}, POST /api/tools/batch {recipe_id, servings}. Constants (bar_math.py): OZ_PER_BOTTLE_750=25.36, dilution=25% of concentrate. testIDs (Batch): batch-back, batch-recipe-{id}, batch-servings, batch-quick-{n}, batch-calculate, batch-ing-{i}. testIDs (Shopping): shopping-back, shopping-guests, shopping-per-guest, shopping-pick-{id}, shopping-calculate, shopping-item-{i}. Entry-point testIDs: profile row tool-batch / tool-shopping, recipe-detail recipe-batch, event-detail event-shopping. Deep links: /tools/batch?recipeId=<id>, /tools/shopping?eventId=<id> (auth required for event prefill). Event->shopping preselection filters items with null recipe_id (AI-only drinks are excluded on purpose).",
+  "rca_of_issue": "N/A — feature ships cleanly. All 7 acceptance criteria in the review request met."
+}
