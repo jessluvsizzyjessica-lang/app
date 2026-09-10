@@ -2,6 +2,7 @@
 # dependency install step runs there; without it the repo root has no
 # package.json, nothing gets installed, and `npx expo` falls back to fetching a
 # bare CLI that cannot read the project's Expo config.
+TOML
 [build]
   command = "cd frontend && npx expo export --platform web"
   publish = "frontend/dist"
@@ -15,3 +16,4 @@
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
+  
