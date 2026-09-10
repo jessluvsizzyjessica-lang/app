@@ -1,6 +1,19 @@
+import { Platform } from "react-native";
+
 import { storage } from "@/src/utils/storage";
 
-export const API_BASE = process.env.EXPO_PUBLIC_BACKEND_URL as string;
+// EXPO_PUBLIC_* values are inlined at build time, so an unset var silently
+// becomes undefined and every request goes to "undefined/api/...". Normalise the
+// trailing slash so the value can be concatenated safely.
+const CONFIGURED_BASE = (process.env.EXPO_PUBLIC_BACKEND_URL ?? "").trim().replace(/\/+$/, "");
+
+// The API runs as a Netlify Function on the same site as the web build, so an
+// empty base is the correct default there: requests resolve against the current
+// origin. A native build has no origin to fall back on, so it still needs
+// EXPO_PUBLIC_BACKEND_URL and should say so plainly instead of requesting
+// "undefined/api/...".
+export const API_BASE = CONFIGURED_BASE;
+export const API_CONFIGURED = CONFIGURED_BASE !== "" || Platform.OS === "web";
 export const TOKEN_KEY = "mm_token";
 
 export class ApiError extends Error {
@@ -34,6 +47,9 @@ export async function apiFetch<T = any>(path: string, opts: Options = {}): Promi
     const token = await getToken();
     if (token) headers.Authorization = `Bearer ${token}`;
   }
+  if (!API_CONFIGURED) {
+    throw new ApiError("Backend URL is not configured (EXPO_PUBLIC_BACKEND_URL is unset in this build).", 0);
+  }
   const res = await fetch(`${API_BASE}/api${path}`, {
     method,
     headers,
@@ -55,6 +71,7 @@ export async function apiFetch<T = any>(path: string, opts: Options = {}): Promi
 export function resolveImage(url?: string | null): string | undefined {
   if (!url) return undefined;
   if (url.startsWith("http")) return url;
+  if (!API_CONFIGURED) return undefined;
   return `${API_BASE}${url}`;
 }
 
