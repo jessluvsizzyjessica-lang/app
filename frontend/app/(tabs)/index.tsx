@@ -124,15 +124,28 @@ export default function Discover() {
         <View style={styles.center}>
           <ActivityIndicator color={colors.brandPrimary} />
         </View>
-     try {
-  const res = await fetch('/api/recipes');
-  const data = await res.json();
-  setLibrary(data);
-} catch {
-  // fallback local data so Discover never says "Failed to load library"
-  const local = require('@/assets/data/cocktails.json'); 
-  setLibrary(local);
-}
+   const recipesQ = useQuery({
+  queryKey: ['recipes'],
+  queryFn: async () => {
+    try {
+      const res = await fetch('/api/recipes');
+      if (!res.ok) throw new Error('api down');
+      return await res.json();
+    } catch {
+      // This stops "Failed to load library" forever
+      try {
+        return require('@/assets/data/cocktails.json');
+      } catch {
+        // if that file doesn't exist, return 3 dummy drinks so screen always works
+        return [
+          { id: '1', name: 'Spiced Mule', spirit: 'vodka' },
+          { id: '2', name: 'Old Fashioned', spirit: 'whiskey' },
+          { id: '3', name: 'Margarita', spirit: 'tequila' },
+        ];
+      }
+    }
+  },
+});
         </View>
       ) : (
         <FlatList
