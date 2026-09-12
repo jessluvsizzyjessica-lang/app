@@ -7,6 +7,9 @@ TOML
   command = "cd frontend && npx expo export --platform web"
   publish = "frontend/dist"
 
+[build.environment]
+  NODE_VERSION = "22"
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
@@ -16,4 +19,3 @@ TOML
   from = "/api/*"
   to = "/.netlify/functions/api/:splat"
   status = 200
-  
