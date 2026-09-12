@@ -45,10 +45,8 @@ export default function Discover() {
         return await res.json();
       } catch {
         try {
-          // Try your real file if it exists
           return require('@/assets/data/cocktails.json');
         } catch {
-          // Guaranteed fallback - Discover will NEVER say "Failed to load library"
           return [
             { id: '1', name: 'Spiced Mule', spirit: 'vodka', category: 'All' },
             { id: '2', name: 'Old Fashioned', spirit: 'whiskey', category: 'All' },
@@ -94,15 +92,7 @@ export default function Discover() {
         <Text style={styles.title}>Discover</Text>
         <View style={styles.searchBar}>
           <MagnifyingGlass size={18} color={colors.muted} />
-          <TextInput
-            testID="recipe-search-input"
-            placeholder="Search cocktails, spirits..."
-            placeholderTextColor={colors.muted}
-            value={search}
-            onChangeText={setSearch}
-            style={styles.searchInput}
-            returnKeyType="search"
-          />
+          <TextInput testID="recipe-search-input" placeholder="Search cocktails, spirits..." placeholderTextColor={colors.muted} value={search} onChangeText={setSearch} style={styles.searchInput} returnKeyType="search" />
         </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipsRow}>
           {cats.map((c) => {
@@ -117,5 +107,50 @@ export default function Discover() {
       </View>
 
       {recipesQ.isLoading ? (
-        <View style={styles.center}>
-          <ActivityIndicator color={colors.brand
+        <View style={styles.center}><ActivityIndicator color={colors.brandPrimary} /></View>
+      ) : (
+        <FlatList
+          testID="recipes-list"
+          data={recipesQ.data ?? []}
+          keyExtractor={(r) => r.id}
+          numColumns={2}
+          columnWrapperStyle={styles.columnWrap}
+          contentContainerStyle={styles.listContent}
+          ListHeaderComponent={ListHeader}
+          renderItem={({ item }) => <RecipeCard recipe={item} />}
+          ListEmptyComponent={<View style={styles.center}><Text style={styles.emptyText}>No recipes found.</Text></View>}
+          refreshControl={<RefreshControl refreshing={recipesQ.isFetching} onRefresh={() => recipesQ.refetch()} tintColor={colors.brandPrimary} />}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
+    </View>
+  );
+}
+
+const useStyles = makeStyles((colors) => ({
+  screen: { flex: 1, backgroundColor: colors.surface },
+  header: { paddingHorizontal: 16, paddingBottom: 8, backgroundColor: colors.surface },
+  eyebrow: { color: colors.brandPrimary, fontFamily: fonts.text, fontSize: 11, fontWeight: "800", letterSpacing: 1.5 },
+  title: { color: colors.onSurface, fontFamily: fonts.display, fontSize: 34, fontWeight: "700", marginTop: 2 },
+  searchBar: { flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: colors.surfaceTertiary, borderRadius: radius.md, paddingHorizontal: 14, height: 46, marginTop: 14 },
+  searchInput: { flex: 1, fontFamily: fonts.text, fontSize: 15, color: colors.onSurface },
+  chipsRow: { gap: 8, paddingVertical: 12, paddingRight: 8 },
+  chip: { height: 36, flexShrink: 0, paddingHorizontal: 16, borderRadius: radius.pill, backgroundColor: colors.surfaceTertiary, alignItems: "center", justifyContent: "center" },
+  chipActive: { backgroundColor: colors.brandPrimary },
+  chipText: { color: colors.onSurfaceTertiary, fontFamily: fonts.text, fontSize: 13, fontWeight: "600" },
+  chipTextActive: { color: colors.onBrandPrimary },
+  listContent: { paddingHorizontal: 16, paddingBottom: 24 },
+  columnWrap: { gap: 12, marginBottom: 12 },
+  section: { marginBottom: 4 },
+  sectionTitle: { color: colors.onSurface, fontFamily: fonts.display, fontSize: 22, fontWeight: "700" },
+  garnishRow: { gap: 12, paddingVertical: 12, paddingRight: 8 },
+  garnishCard: { width: 220, height: 140, borderRadius: radius.lg, overflow: "hidden", backgroundColor: colors.surfaceTertiary },
+  garnishImg: { position: "absolute", top: 0, left: 0, right: 0, bottom: 0 },
+  garnishScrim: { position: "absolute", left: 0, right: 0, bottom: 0, height: "80%" },
+  garnishBody: { position: "absolute", left: 12, right: 12, bottom: 10 },
+  garnishTitle: { color: "#FFFFFF", fontFamily: fonts.display, fontSize: 16, fontWeight: "700" },
+  garnishTip: { color: "rgba(255,255,255,0.85)", fontFamily: fonts.text, fontSize: 11, marginTop: 2 },
+  center: { padding: 40, alignItems: "center", justifyContent: "center", gap: 8 },
+  emptyText: { color: colors.muted, fontFamily: fonts.text, fontSize: 14, textAlign: "center" },
+  retry: { color: colors.brandPrimary, fontFamily: fonts.text, fontSize: 14, fontWeight: "700" },
+}));
