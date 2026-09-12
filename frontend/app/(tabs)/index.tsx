@@ -1,3 +1,5 @@
+import { cocktails as localCocktails } from '@/assets/data/cocktails'; // or wherever your local JSON is
+// If you don't have one, use: const localCocktails = [{ id: '1', name: 'Spiced Mule' }];
 import React, { useMemo, useState } from "react";
 import {
   ActivityIndicator,
