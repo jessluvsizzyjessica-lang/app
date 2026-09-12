@@ -3,7 +3,7 @@
 # package.json, nothing gets installed, and `npx expo` falls back to fetching a
 # bare CLI that cannot read the project's Expo config.
 [build]
-  command = "cd frontend && npm ci && npx expo export --platform web"
+  command = "cd frontend && npm install && npx expo export --platform web"
   publish = "frontend/dist"
 
 [build.environment]
