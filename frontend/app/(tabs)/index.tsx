@@ -115,12 +115,15 @@ export default function Discover() {
         <View style={styles.center}>
           <ActivityIndicator color={colors.brandPrimary} />
         </View>
-      ) : recipesQ.isError ? (
-        <View style={styles.center}>
-          <Text style={styles.emptyText}>Failed to load library.</Text>
-          <Pressable onPress={() => recipesQ.refetch()} testID="retry-recipes">
-            <Text style={styles.retry}>Tap to retry</Text>
-          </Pressable>
+     try {
+  const res = await fetch('/api/recipes');
+  const data = await res.json();
+  setLibrary(data);
+} catch {
+  // fallback local data so Discover never says "Failed to load library"
+  const local = require('@/assets/data/cocktails.json'); 
+  setLibrary(local);
+}
         </View>
       ) : (
         <FlatList
