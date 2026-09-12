@@ -90,6 +90,24 @@ export default function Discover() {
       <View style={styles.header}>
         <Text style={styles.eyebrow}>THE MOBILE MIXERY</Text>
         <Text style={styles.title}>Discover</Text>
+        import * as Linking from 'expo-linking';
+
+// ... inside your header View:
+<Pressable 
+  onPress={() => Linking.openURL('https://app.themobilemixeryca.com')}
+  style={{ 
+    marginTop: 12,
+    backgroundColor: colors.brandPrimary, 
+    paddingHorizontal: 20, 
+    paddingVertical: 12, 
+    borderRadius: 100,
+    alignSelf: 'flex-start'
+  }}
+>
+  <Text style={{ color: 'white', fontWeight: '800', letterSpacing: 0.5 }}>
+    Open the App →
+  </Text>
+</Pressable>
         <View style={styles.searchBar}>
           <MagnifyingGlass size={18} color={colors.muted} />
           <TextInput testID="recipe-search-input" placeholder="Search cocktails, spirits..." placeholderTextColor={colors.muted} value={search} onChangeText={setSearch} style={styles.searchInput} returnKeyType="search" />
