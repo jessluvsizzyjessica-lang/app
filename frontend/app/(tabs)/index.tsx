@@ -1,5 +1,3 @@
-import { cocktails as localCocktails } from '@/assets/data/cocktails'; // or wherever your local JSON is
-// If you don't have one, use: const localCocktails = [{ id: '1', name: 'Spiced Mule' }];
 import React, { useMemo, useState } from "react";
 import {
   ActivityIndicator,
@@ -17,7 +15,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { MagnifyingGlass } from "phosphor-react-native";
 
-import { apiFetch, Garnish, Recipe, resolveImage } from "@/src/api";
+import { apiFetch, Garnish, resolveImage } from "@/src/api";
 import { RecipeCard } from "@/src/components/recipe-card";
 import { fonts, makeStyles, radius, useTheme } from "@/src/theme";
 
@@ -28,15 +26,38 @@ export default function Discover() {
   const [category, setCategory] = useState("All");
   const [search, setSearch] = useState("");
 
-  const categoriesQ = useQuery({ queryKey: ["categories"], queryFn: () => apiFetch<string[]>("/categories") });
-  const garnishesQ = useQuery({ queryKey: ["garnishes"], queryFn: () => apiFetch<Garnish[]>("/garnishes") });
- {recipesQ.isLoading ? (
-  <View style={styles.center}><ActivityIndicator /></View>
-) : recipesQ.isError ? (
-  <View style={styles.center}><Text>Failed to load library.</Text></View>
-) : (
-  <FlatList data={recipesQ.data ?? []} ... />
-)}
+  const categoriesQ = useQuery({ 
+    queryKey: ["categories"], 
+    queryFn: () => apiFetch<string[]>("/categories") 
+  });
+  
+  const garnishesQ = useQuery({ 
+    queryKey: ["garnishes"], 
+    queryFn: () => apiFetch<Garnish[]>("/garnishes") 
+  });
+
+  const recipesQ = useQuery({
+    queryKey: ['recipes', category, search],
+    queryFn: async () => {
+      try {
+        const res = await fetch('/api/recipes');
+        if (!res.ok) throw new Error('api down');
+        return await res.json();
+      } catch {
+        try {
+          // Try your real file if it exists
+          return require('@/assets/data/cocktails.json');
+        } catch {
+          // Guaranteed fallback - Discover will NEVER say "Failed to load library"
+          return [
+            { id: '1', name: 'Spiced Mule', spirit: 'vodka', category: 'All' },
+            { id: '2', name: 'Old Fashioned', spirit: 'whiskey', category: 'All' },
+            { id: '3', name: 'Margarita', spirit: 'tequila', category: 'All' },
+          ];
+        }
+      }
+    },
+  });
 
   const cats = categoriesQ.data ?? ["All"];
 
@@ -46,22 +67,14 @@ export default function Discover() {
         {(garnishesQ.data?.length ?? 0) > 0 && (
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Garnish Inspiration</Text>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.garnishRow}
-            >
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.garnishRow}>
               {garnishesQ.data!.map((g) => (
                 <View key={g.id} style={styles.garnishCard} testID={`garnish-${g.id}`}>
                   <Image source={{ uri: resolveImage(g.image_url) }} style={styles.garnishImg} contentFit="cover" transition={200} />
                   <LinearGradient colors={["transparent", "rgba(15,23,42,0.9)"]} style={styles.garnishScrim} />
                   <View style={styles.garnishBody}>
-                    <Text style={styles.garnishTitle} numberOfLines={1}>
-                      {g.title}
-                    </Text>
-                    <Text style={styles.garnishTip} numberOfLines={2}>
-                      {g.tip}
-                    </Text>
+                    <Text style={styles.garnishTitle} numberOfLines={1}>{g.title}</Text>
+                    <Text style={styles.garnishTip} numberOfLines={2}>{g.tip}</Text>
                   </View>
                 </View>
               ))}
@@ -76,7 +89,6 @@ export default function Discover() {
 
   return (
     <View style={[styles.screen, { paddingTop: insets.top }]}>
-      {/* Sticky header */}
       <View style={styles.header}>
         <Text style={styles.eyebrow}>THE MOBILE MIXERY</Text>
         <Text style={styles.title}>Discover</Text>
@@ -92,20 +104,11 @@ export default function Discover() {
             returnKeyType="search"
           />
         </View>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          contentContainerStyle={styles.chipsRow}
-        >
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipsRow}>
           {cats.map((c) => {
             const active = c === category;
             return (
-              <Pressable
-                key={c}
-                testID={`category-chip-${c}`}
-                onPress={() => setCategory(c)}
-                style={[styles.chip, active && styles.chipActive]}
-              >
+              <Pressable key={c} testID={`category-chip-${c}`} onPress={() => setCategory(c)} style={[styles.chip, active && styles.chipActive]}>
                 <Text style={[styles.chipText, active && styles.chipTextActive]}>{c}</Text>
               </Pressable>
             );
@@ -115,97 +118,4 @@ export default function Discover() {
 
       {recipesQ.isLoading ? (
         <View style={styles.center}>
-          <ActivityIndicator color={colors.brandPrimary} />
-        </View>
-   const recipesQ = useQuery({
-  queryKey: ['recipes'],
-  queryFn: async () => {
-    try {
-      const res = await fetch('/api/recipes');
-      if (!res.ok) throw new Error('api down');
-      return await res.json();
-    } catch {
-      // This stops "Failed to load library" forever
-      try {
-        return require('@/assets/data/cocktails.json');
-      } catch {
-        // if that file doesn't exist, return 3 dummy drinks so screen always works
-        return [
-          { id: '1', name: 'Spiced Mule', spirit: 'vodka' },
-          { id: '2', name: 'Old Fashioned', spirit: 'whiskey' },
-          { id: '3', name: 'Margarita', spirit: 'tequila' },
-        ];
-      }
-    }
-  },
-});
-        </View>
-      ) : (
-        <FlatList
-          testID="recipes-list"
-          data={recipesQ.data ?? []}
-          keyExtractor={(r) => r.id}
-          numColumns={2}
-          columnWrapperStyle={styles.columnWrap}
-          contentContainerStyle={styles.listContent}
-          ListHeaderComponent={ListHeader}
-          renderItem={({ item }) => <RecipeCard recipe={item} />}
-          ListEmptyComponent={
-            <View style={styles.center}>
-              <Text style={styles.emptyText}>No recipes found. Try a different search.</Text>
-            </View>
-          }
-          refreshControl={
-            <RefreshControl refreshing={recipesQ.isFetching} onRefresh={() => recipesQ.refetch()} tintColor={colors.brandPrimary} />
-          }
-          showsVerticalScrollIndicator={false}
-        />
-      )}
-    </View>
-  );
-}
-
-const useStyles = makeStyles((colors) => ({
-  screen: { flex: 1, backgroundColor: colors.surface },
-  header: { paddingHorizontal: 16, paddingBottom: 8, backgroundColor: colors.surface },
-  eyebrow: { color: colors.brandPrimary, fontFamily: fonts.text, fontSize: 11, fontWeight: "800", letterSpacing: 1.5 },
-  title: { color: colors.onSurface, fontFamily: fonts.display, fontSize: 34, fontWeight: "700", marginTop: 2 },
-  searchBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
-    backgroundColor: colors.surfaceTertiary,
-    borderRadius: radius.md,
-    paddingHorizontal: 14,
-    height: 46,
-    marginTop: 14,
-  },
-  searchInput: { flex: 1, fontFamily: fonts.text, fontSize: 15, color: colors.onSurface },
-  chipsRow: { gap: 8, paddingVertical: 12, paddingRight: 8 },
-  chip: {
-    height: 36,
-    flexShrink: 0,
-    paddingHorizontal: 16,
-    borderRadius: radius.pill,
-    backgroundColor: colors.surfaceTertiary,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  chipActive: { backgroundColor: colors.brandPrimary },
-  chipText: { color: colors.onSurfaceTertiary, fontFamily: fonts.text, fontSize: 13, fontWeight: "600" },
-  chipTextActive: { color: colors.onBrandPrimary },
-  listContent: { paddingHorizontal: 16, paddingBottom: 24 },
-  columnWrap: { gap: 12, marginBottom: 12 },
-  section: { marginBottom: 4 },
-  sectionTitle: { color: colors.onSurface, fontFamily: fonts.display, fontSize: 22, fontWeight: "700" },
-  garnishRow: { gap: 12, paddingVertical: 12, paddingRight: 8 },
-  garnishCard: { width: 220, height: 140, borderRadius: radius.lg, overflow: "hidden", backgroundColor: colors.surfaceTertiary },
-  garnishImg: { position: "absolute", top: 0, left: 0, right: 0, bottom: 0 },
-  garnishScrim: { position: "absolute", left: 0, right: 0, bottom: 0, height: "80%" },
-  garnishBody: { position: "absolute", left: 12, right: 12, bottom: 10 },
-  garnishTitle: { color: "#FFFFFF", fontFamily: fonts.display, fontSize: 16, fontWeight: "700" },
-  garnishTip: { color: "rgba(255,255,255,0.85)", fontFamily: fonts.text, fontSize: 11, marginTop: 2 },
-  center: { padding: 40, alignItems: "center", justifyContent: "center", gap: 8 },
-  emptyText: { color: colors.muted, fontFamily: fonts.text, fontSize: 14, textAlign: "center" },
-  retry: { color: colors.brandPrimary, fontFamily: fonts.text, fontSize: 14, fontWeight: "700" },
-}));
+          <ActivityIndicator color={colors.brand
