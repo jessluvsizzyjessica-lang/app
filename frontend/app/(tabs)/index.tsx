@@ -31,12 +31,19 @@ export default function Discover() {
   const categoriesQ = useQuery({ queryKey: ["categories"], queryFn: () => apiFetch<string[]>("/categories") });
   const garnishesQ = useQuery({ queryKey: ["garnishes"], queryFn: () => apiFetch<Garnish[]>("/garnishes") });
   const recipesQ = useQuery({
-    queryKey: ["recipes", category, search],
-    queryFn: () =>
-      apiFetch<Recipe[]>(
-        `/recipes?category=${encodeURIComponent(category)}${search ? `&q=${encodeURIComponent(search)}` : ""}`,
-      ),
-  });
+  queryKey: ['recipes'],
+  queryFn: async () => {
+    try {
+      const base = process.env.EXPO_PUBLIC_API_URL || '';
+      const res = await fetch(`${base}/api/recipes`);
+      if (!res.ok) throw new Error('api down');
+      return await res.json();
+    } catch {
+      // Fallback so Discover never shows "Failed to load library"
+      return localCocktails;
+    }
+  },
+});
 
   const cats = categoriesQ.data ?? ["All"];
 
