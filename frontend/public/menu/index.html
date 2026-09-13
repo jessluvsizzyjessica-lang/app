@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Menus &amp; Drink Options — The Mobile Mixery</title>
+<title>Menus & Drink Options — The Mobile Mixery</title>
 <meta name="description" content="Seasonal cocktail menus and the full drink book from The Mobile Mixery — mobile bartending in Riverside, CA. Filter 32 cocktails by season, spirit, flavour and colour." />
 <meta name="theme-color" content="#FFFBF6" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -28,21 +28,91 @@
 </header>
 
 <main>
-
-  <!-- ─────────────────────────  INTRO  ───────────────────────── -->
   <section class="intro">
     <p class="script">craft cocktails, your venue</p>
-    <h1>Menus &amp; Drink Options</h1>
-    <p class="intro-lede">
-      Every lineup we pour, in one place. Browse the menu boards we've designed for
-      past events, then dig through the full book — filter by season, spirit, flavour
-      or colour to find the mix that fits your party.
-    </p>
+    <h1>Menus & Drink Options</h1>
+    <p class="intro-lede">Every lineup we pour, in one place. Browse the menu boards we've designed for past events, then dig through the full book — filter by season, spirit, flavour or colour to find the mix that fits your party.</p>
     <p class="intro-meta">Riverside &bull; Rowland Heights &bull; SoCal</p>
   </section>
 
-  <!-- ─────────────────────  MENU GALLERY  ───────────────────── -->
+  <!-- MENU GALLERY -->
   <section id="menus" class="section section-tint">
     <div class="wrap">
       <div class="section-head">
-        
+        <h2>Menu Boards</h2>
+        <p id="menu-count" class="count-line">Loading boards…</p>
+      </div>
+      <div id="gallery" class="gallery-grid"></div>
+    </div>
+  </section>
+
+  <!-- DRINKS -->
+  <section id="drinks" class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Drink Options</h2>
+        <p id="drink-count" class="count-line"></p>
+      </div>
+
+      <form id="filters" class="filters" onsubmit="return false;">
+        <div class="search-row">
+          <input id="q" type="search" placeholder="Search drinks, flavors, ingredients…" autocomplete="off" />
+          <button id="clear" type="button" class="btn btn-ghost" hidden>Clear filters</button>
+        </div>
+        <div id="chip-groups" class="chip-groups"></div>
+        <p id="count" class="count-line"></p>
+      </form>
+
+      <div id="grid" class="drink-grid"></div>
+
+      <div id="empty" class="empty" hidden>
+        <p>No drinks match those filters.</p>
+        <button id="empty-clear" type="button" class="btn">Clear filters</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- INQUIRY -->
+  <section id="inquiry" class="section section-tint">
+    <div class="wrap inquiry-wrap">
+      <div class="inquiry-intro">
+        <h2>Let's Mix Your Event</h2>
+        <p>Tell us the vibe, guest count, and date — we'll craft a lineup from these boards + the full book.</p>
+      </div>
+      <form id="inquiry-form" name="inquiry" method="POST" data-netlify="true" action="/menu/" class="inquiry-form">
+        <input type="hidden" name="form-name" value="inquiry" />
+        <label>Your Name<input name="name" required /></label>
+        <label>Email<input name="email" type="email" required /></label>
+        <label>Event Date<input name="date" type="date" /></label>
+        <label>Details<textarea name="message" rows="4" placeholder="Guest count, venue, vibe…"></textarea></label>
+        <button type="submit" class="btn btn-primary">Send Inquiry</button>
+        <p id="form-status" class="form-status" hidden></p>
+      </form>
+      <div id="inquiry-done" class="form-done" hidden tabindex="-1">
+        <h3>Sent! 🎉</h3>
+        <p>We got it — we'll reply from @the_mobile_mixery_ shortly.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" class="lightbox" hidden>
+  <button id="lb-close" class="lb-close" aria-label="Close">×</button>
+  <button id="lb-prev" class="lb-nav lb-prev" aria-label="Previous">‹</button>
+  <button id="lb-next" class="lb-nav lb-next" aria-label="Next">›</button>
+  <div class="lb-body">
+    <img id="lb-img" alt="" />
+    <div class="lb-meta">
+      <h3 id="lb-title"></h3>
+      <p id="lb-pours"></p>
+      <p id="lb-pos"></p>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="/menu/assets/data.js"></script>
+<script type="module" src="/menu/assets/filter.js"></script>
+<script type="module" src="/menu/assets/app.js"></script>
+</body>
+</html>
