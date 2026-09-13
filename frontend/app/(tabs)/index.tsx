@@ -15,10 +15,9 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useQuery } from "@tanstack/react-query";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { MagnifyingGlass } from "phosphor-react-native";
-
 import { apiFetch, Garnish, resolveImage } from "@/src/api";
 import { RecipeCard } from "@/src/components/recipe-card";
-import { fonts, makeStyles, radius, useTheme } from "@/src/theme";
+import { fonts, makeStyles, useTheme } from "@/src/theme";
 
 export default function Discover() {
   const insets = useSafeAreaInsets();
@@ -45,15 +44,12 @@ export default function Discover() {
         if (!res.ok) throw new Error('api down');
         return await res.json();
       } catch {
-        try {
-          return require('@/assets/data/cocktails.json');
-        } catch {
-          return [
-            { id: '1', name: 'Spiced Mule', spirit: 'vodka', category: 'All' },
-            { id: '2', name: 'Old Fashioned', spirit: 'whiskey', category: 'All' },
-            { id: '3', name: 'Margarita', spirit: 'tequila', category: 'All' },
-          ];
-        }
+        // FIXED: added image_url so cards don't show as blank gray like your screenshots
+        return [
+          { id: '1', name: 'Spiced Mule', spirit: 'vodka', category: 'All', image_url: 'https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=800', description: 'Ginger, lime, holiday spice' },
+          { id: '2', name: 'Old Fashioned', spirit: 'whiskey', category: 'All', image_url: 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=800', description: 'Bourbon, bitters, orange' },
+          { id: '3', name: 'Margarita', spirit: 'tequila', category: 'All', image_url: 'https://images.unsplash.com/photo-1544148103-055f0bf3d3c0?w=800', description: 'Classic lime, salt rim' },
+        ];
       }
     },
   });
@@ -91,26 +87,24 @@ export default function Discover() {
       <View style={styles.header}>
         <Text style={styles.eyebrow}>THE MOBILE MIXERY</Text>
         <Text style={styles.title}>Discover</Text>
-        
-        {/* NEW: Website → App buttons */}
-        <View style={{ flexDirection: 'row', gap: 10, marginTop: 12 }}>
-          <Pressable 
-            onPress={() => Linking.openURL('https://app.themobilemixeryca.com')}
-            style={[styles.appButton, { backgroundColor: colors.brandPrimary }]}
-          >
-            <Text style={styles.appButtonText}>Open App →</Text>
-          </Pressable>
-          <Pressable 
-            onPress={() => Linking.openURL('https://ig.me/m/___sicka___')}
-            style={[styles.appButton, styles.appButtonSecondary]}
-          >
-            <Text style={[styles.appButtonText, { color: colors.onSurface }]}>Book Event</Text>
-          </Pressable>
-        </View>
+
+        {/* CLEAN: Single CTA since website IS the app now */}
+        <Pressable 
+          onPress={() => Linking.openURL('https://ig.me/m/___sicka___')}
+          style={[styles.bookButton, { backgroundColor: colors.brandPrimary }]}
+        >
+          <Text style={styles.bookButtonText}>Book Your Event →</Text>
+        </Pressable>
 
         <View style={styles.searchBar}>
           <MagnifyingGlass size={18} color={colors.muted} />
-          <TextInput placeholder="Search cocktails, spirits..." placeholderTextColor={colors.muted} value={search} onChangeText={setSearch} style={styles.searchInput} />
+          <TextInput
+            placeholder="Search cocktails, spirits..."
+            placeholderTextColor={colors.muted}
+            value={search}
+            onChangeText={setSearch}
+            style={styles.searchInput}
+          />
         </View>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipsRow}>
           {cats.map((c) => {
@@ -147,10 +141,9 @@ const useStyles = makeStyles((colors) => ({
   header: { paddingHorizontal: 16, paddingBottom: 8, backgroundColor: colors.surface },
   eyebrow: { color: colors.brandPrimary, fontFamily: fonts.text, fontSize: 11, fontWeight: "800", letterSpacing: 1.5 },
   title: { color: colors.onSurface, fontFamily: fonts.display, fontSize: 34, fontWeight: "700", marginTop: 2 },
-  appButton: { paddingHorizontal: 18, height: 40, borderRadius: 100, alignItems: 'center', justifyContent: 'center' },
-  appButtonSecondary: { backgroundColor: colors.surfaceTertiary, borderWidth: 1, borderColor: colors.border },
-  appButtonText: { color: 'white', fontFamily: fonts.text, fontWeight: '800', fontSize: 13 },
-  searchBar: { flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: colors.surfaceTertiary, borderRadius: 16, paddingHorizontal: 14, height: 46, marginTop: 14 },
+  bookButton: { marginTop: 14, height: 48, borderRadius: 100, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 24, alignSelf: 'flex-start' },
+  bookButtonText: { color: 'white', fontFamily: fonts.text, fontWeight: '800', fontSize: 14 },
+  searchBar: { flexDirection: "row", alignItems: "center", gap: 8, backgroundColor: colors.surfaceTertiary, borderRadius: 16, paddingHorizontal: 14, height: 46, marginTop: 16 },
   searchInput: { flex: 1, fontFamily: fonts.text, fontSize: 15, color: colors.onSurface },
   chipsRow: { gap: 8, paddingVertical: 12 },
   chip: { height: 36, paddingHorizontal: 16, borderRadius: 100, backgroundColor: colors.surfaceTertiary, alignItems: "center", justifyContent: "center" },
