@@ -3,24 +3,20 @@ import { Platform } from "react-native";
 import { Tabs } from "expo-router";
 import { House, Sparkle, CalendarStar, UserCircle } from "phosphor-react-native";
 
-import { fonts, useTheme } from "@/src/theme";
-
 export default function TabsLayout() {
-  const { colors } = useTheme();
-
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
-        tabBarActiveTintColor: colors.brandPrimary,
-        tabBarInactiveTintColor: colors.muted,
+        tabBarActiveTintColor: "#7c3aed",
+        tabBarInactiveTintColor: "#9ca3af",
         tabBarStyle: {
-          backgroundColor: colors.surface,
-          borderTopColor: colors.border,
+          backgroundColor: "white",
+          borderTopColor: "#e5e7eb",
           ...(Platform.OS === "web" ? { height: 64 } : {}),
         },
         tabBarItemStyle: { alignSelf: "center" },
-        tabBarLabelStyle: { fontFamily: fonts.text, fontSize: 11, fontWeight: "600" },
+        tabBarLabelStyle: { fontSize: 11, fontWeight: "600" },
       }}
     >
       <Tabs.Screen
