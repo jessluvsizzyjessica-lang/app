@@ -13,10 +13,10 @@ export default function Index() {
           <Text style={{ color: "#fff", fontWeight: "800", letterSpacing: 2, fontSize: 11 }}>THE MOBILE MIXERY</Text>
         </View>
         <View style={{ flexDirection: "row", gap: 10 }}>
-          <Pressable onPress={() => Linking.openURL("https://themobilemixeryca.com/menu/")} style={{ borderWidth: 1, borderColor: "#2a2f5a", paddingHorizontal: 12, paddingVertical: 8, borderRadius: 999 }}>
+          <Pressable onPress={() => Linking.openURL("/menu/")} style={{ borderWidth: 1, borderColor: "#2a2f5a", paddingHorizontal: 12, paddingVertical: 8, borderRadius: 999 }}>
             <Text style={{ color: "#E5E7EB", fontSize: 11 }}>MENUS • 20 BOARDS</Text>
           </Pressable>
-          <Pressable onPress={() => Linking.openURL("https://themobilemixeryca.com/menu/")} style={{ backgroundColor: "#fff", paddingHorizontal: 14, paddingVertical: 9, borderRadius: 999 }}>
+          <Pressable onPress={() => Linking.openURL("/menu/")} style={{ backgroundColor: "#fff", paddingHorizontal: 14, paddingVertical: 9, borderRadius: 999 }}>
             <Text style={{ color: "#000", fontWeight: "700", fontSize: 11 }}>Open Menus →</Text>
           </Pressable>
         </View>
@@ -33,10 +33,10 @@ export default function Index() {
           Private bartending for weddings, birthdays & late-night celebrations across SoCal. Custom cups, floral garnishes, light-up letters — real events from Riverside & Rowland Heights.
         </Text>
         <View style={{ flexDirection: "row", gap: 10, flexWrap: "wrap" }}>
-          <Pressable onPress={() => Linking.openURL("https://themobilemixeryca.com/menu/")} style={{ backgroundColor: "#8B5CF6", paddingHorizontal: 18, paddingVertical: 13, borderRadius: 999 }}>
+          <Pressable onPress={() => Linking.openURL("/menu/")} style={{ backgroundColor: "#8B5CF6", paddingHorizontal: 18, paddingVertical: 13, borderRadius: 999 }}>
             <Text style={{ color: "#fff", fontWeight: "700" }}>Launch App →</Text>
           </Pressable>
-          <Pressable onPress={() => Linking.openURL("https://themobilemixeryca.com/menu/")} style={{ borderWidth: 1, borderColor: "#2a2f5a", paddingHorizontal: 18, paddingVertical: 13, borderRadius: 999 }}>
+          <Pressable onPress={() => Linking.openURL("/menu/")} style={{ borderWidth: 1, borderColor: "#2a2f5a", paddingHorizontal: 18, paddingVertical: 13, borderRadius: 999 }}>
             <Text style={{ color: "#E5E7EB", fontWeight: "600" }}>View 20 Menu Boards</Text>
           </Pressable>
           <Pressable onPress={() => Linking.openURL("https://ig.me/m/the_mobile_mixery_")} style={{ backgroundColor: "#fff", paddingHorizontal: 18, paddingVertical: 13, borderRadius: 999, borderWidth: 1, borderColor: "#E1306C" }}>
