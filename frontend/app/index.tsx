@@ -1,3 +1,6 @@
+
+        </View>
+     
 import { View, Text, ScrollView, Pressable, Image, Linking } from "react-native";
 import { Link } from "expo-router";
 
@@ -15,8 +18,8 @@ export default function Index() {
           <Text style={{ color: "#fff", fontWeight: "800", letterSpacing: 2, fontSize: 11 }}>THE MOBILE MIXERY</Text>
         </View>
         <View style={{ flexDirection: "row", gap: 10 }}>
-          <Link href="/menu" asChild><Pressable style={{ borderWidth: 1, borderColor: "#2a2f5a", paddingHorizontal: 12, paddingVertical: 8, borderRadius: 999 }}><Text style={{ color: "#E5E7EB", fontSize: 11 }}>MENUS</Text></Pressable></Link>
-          <Pressable onPress={() => Linking.openURL("/menu/")} style={{ backgroundColor: "#fff", paddingHorizontal: 14, paddingVertical: 9, borderRadius: 999 }}><Text style={{ color: "#000", fontWeight: "700", fontSize: 11 }}>Open App →</Text></Pressable>
+          <Link href="/menu/" asChild><Pressable style={{ borderWidth: 1, borderColor: "#2a2f5a", paddingHorizontal: 12, paddingVertical: 8, borderRadius: 999 }}><Text style={{ color: "#E5E7EB", fontSize: 11 }}>MENUS • 20 BOARDS</Text></Pressable></Link>
+          <Link href="/menu/" asChild><Pressable style={{ backgroundColor: "#fff", paddingHorizontal: 14, paddingVertical: 9, borderRadius: 999 }}><Text style={{ color: "#000", fontWeight: "700", fontSize: 11 }}>Open Menus →</Text></Pressable></Link>
         </View>
       </View>
 
