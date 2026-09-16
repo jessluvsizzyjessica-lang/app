@@ -1,4 +1,37 @@
 import { View, Text, ScrollView, Pressable, Image, Linking } from "react-native";
 import { Link } from "expo-router";
 
-const heroUri = "data:image/jpeg;base64,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
+const heroUri = "data:image/jpeg;base64,[PASTE_YOUR_LONG_HERO_BASE64_STRING_HERE]";
+const mojitoUri = "data:image/jpeg;base64,[PASTE_YOUR_LONG_MOJITO_BASE64_STRING_HERE]";
+const signUri = "data:image/jpeg;base64,[PASTE_YOUR_LONG_SIGN_BASE64_STRING_HERE]";
+
+export default function Index() {
+  return (
+    <ScrollView style={{ flex: 1, backgroundColor: "#0A0B14" }} contentContainerStyle={{ paddingBottom: 40 }}>
+      {/* TOP NAV */}
+      <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: 18, borderBottomWidth: 1, borderBottomColor: "#1f2340", backgroundColor: "#0A0B14" }}>
+        <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <View style={{ width: 20, height: 20, borderRadius: 10, backgroundColor: "#8B5CF6" }} />
+          <Text style={{ color: "#fff", fontWeight: "800", letterSpacing: 2, fontSize: 11 }}>THE MOBILE MIXERY</Text>
+        </View>
+        <View style={{ flexDirection: "row", gap: 10 }}>
+          <Link href="/menu" asChild>
+            <Pressable style={{ borderWidth: 1, borderColor: "#2a2f5a", paddingHorizontal: 12, paddingVertical: 8, borderRadius: 20 }}>
+              <Text style={{ color: "#E5E7EB", fontSize: 11 }}>MENUS • 20 BOARDS</Text>
+            </Pressable>
+          </Link>
+          <Link href="/menu" asChild>
+            <Pressable style={{ backgroundColor: "#fff", paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20 }}>
+              <Text style={{ color: "#000", fontWeight: "700", fontSize: 11 }}>Open Menus -></Text>
+            </Pressable>
+          </Link>
+        </View>
+      </View>
+
+      {/* HERO */}
+      <View style={{ padding: 20, gap: 16, maxWidth: 1100, alignSelf: "center", width: "100%" }}>
+        <View style={{ borderWidth: 1, borderColor: "#2a2f5a", alignSelf: "flex-start", paddingHorizontal: 12, paddingVertical: 6, borderRadius: 999, backgroundColor: "#151735" }}>
+          <Text style={{ color: "#A5B4FC", fontSize: 10 }}>● RIVERSIDE, CA • BOOKING SPRING '26 • REAL EVENTS</Text>
+        </View>
+        <Text style={{ color: "#fff", fontSize: 52, fontWeight: "800", lineHeight: 50 }}>
+          Cocktails,{"\n"}<Text style={{ fontStyle:
