@@ -1,9 +1,10 @@
 import { View, Text, ScrollView, Pressable, Image, Linking } from "react-native";
 import { Link } from "expo-router";
 
-const heroUri = "data:image/jpeg;base64,[PASTE_YOUR_LONG_HERO_BASE64_STRING_HERE]";
-const mojitoUri = "data:image/jpeg;base64,[PASTE_YOUR_LONG_MOJITO_BASE64_STRING_HERE]";
-const signUri = "data:image/jpeg;base64,[PASTE_YOUR_LONG_SIGN_BASE64_STRING_HERE]";
+// Using web images so the file stays small and doesn't corrupt like the base64 did
+const heroUri = "https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=1200&auto=format&fit=crop";
+const mojitoUri = "https://images.unsplash.com/photo-1551538827-9c037cb4f32a?w=600&auto=format&fit=crop";
+const signUri = "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600&auto=format&fit=crop";
 
 export default function Index() {
   return (
@@ -34,4 +35,6 @@ export default function Index() {
           <Text style={{ color: "#A5B4FC", fontSize: 10 }}>● RIVERSIDE, CA • BOOKING SPRING '26 • REAL EVENTS</Text>
         </View>
         <Text style={{ color: "#fff", fontSize: 52, fontWeight: "800", lineHeight: 50 }}>
-          Cocktails,{"\n"}<Text style={{ fontStyle:
+          Cocktails,{"\n"}<Text style={{ fontStyle: "italic", fontWeight: "400", color: "#E9E6FF" }}>Curated.</Text>{"\n"}Bar,{"\n"}<Text style={{ color: "#8B5CF6" }}>Mobile.</Text>
+        </Text>
+        <Text style={{ color: "#CBD5E1", fontSize
