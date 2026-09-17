@@ -89,3 +89,4 @@ const styles = StyleSheet.create({
   footer: { borderTopWidth: 1, borderTopColor: "#1c2040", padding: 20, flexDirection: "row", justifyContent: "space-between", marginTop: 30, flexWrap: "wrap", gap: 10 },
   footerText: { color: "#6B7280", fontSize: 11 },
 });
+
