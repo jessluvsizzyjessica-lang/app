@@ -7,39 +7,50 @@ export default function Home() {
     <ScrollView style={styles.bg} contentContainerStyle={{ paddingBottom: 40 }}>
       <View style={styles.nav}>
         <Text style={styles.logo}>THE MOBILE MIXERY</Text>
-        <View style={{ flexDirection: "row", gap: 16, alignItems: "center" }}>
+        <View style={{ flexDirection: "row", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
           <Pressable onPress={() => Linking.openURL("/menu/")}><Text style={styles.navLink}>MENUS • 68 boards</Text></Pressable>
+          <Pressable onPress={() => Linking.openURL("https://barbatchbible.netlify.app")} style={styles.batchPill}><Text style={styles.batchPillText}>📖 Bar Batch Bible →</Text></Pressable>
           <Pressable onPress={() => Linking.openURL("https://app.themobilemixeryca.com")} style={styles.pill}><Text style={styles.pillText}>Open App →</Text></Pressable>
         </View>
       </View>
       <View style={[styles.hero, isMobile && { flexDirection: "column" }]}>
         <View style={{ flex: 1.1 }}>
-          <View style={styles.badge}><Text style={styles.badgeText}>● RIVERSIDE, CA • BOOKING SPRING '26 • REAL EVENTS</Text></View>
+          <View style={styles.badge}><Text style={styles.badgeText}>● RIVERSIDE, CA • BOOKING SPRING '26 • REAL EVENTS • 68 BOARDS</Text></View>
           <Text style={styles.h1}>Cocktails,{"\n"}<Text style={styles.h1Light}>Curated.</Text>{"\n"}Bar,{"\n"}<Text style={styles.h1Purple}>Mobile.</Text></Text>
-          <Text style={styles.sub}>Private bartending for weddings, birthdays & late-night across SoCal. Real events: Ramiro 50th, Ezra Arcade, Gothic Halloween, Fairy Garden, Camilla Sweet 16, Carolyn 50th.</Text>
+          <Text style={styles.sub}>Private bartending for weddings, birthdays & late-night across SoCal. Real events: Ramiro 50th, Ezra Arcade, Gothic Halloween, Fairy Garden, Camilla Sweet 16, Carolyn 50th. Plus our batch calculator.</Text>
           <View style={styles.ctas}>
+            <Pressable onPress={() => Linking.openURL("https://barbatchbible.netlify.app")} style={styles.btnBatch}><Text style={styles.btnBatchText}>📖 Open Bar Batch Bible →</Text></Pressable>
             <Pressable onPress={() => Linking.openURL("https://app.themobilemixeryca.com")} style={styles.btnPrimary}><Text style={styles.btnPrimaryText}>Launch App →</Text></Pressable>
             <Pressable onPress={() => Linking.openURL("https://ig.me/m/the_mobile_mixery_")} style={styles.btnIg}><Text style={styles.btnIgText}>Book on Instagram</Text></Pressable>
             <Pressable onPress={() => Linking.openURL("/menu/")} style={styles.btnGhost}><Text style={styles.btnGhostText}>View 68 Menu Boards</Text></Pressable>
           </View>
+          <Text style={{ color: "#6B7280", fontSize: 11, marginTop: 12 }}>Bar Batch Bible = your batch calculator for big events • Riverside & Rowland Heights</Text>
         </View>
         <View style={{ flex: 1, gap: 14 }}>
           <View style={styles.mainCard}>
-            <Text style={{ fontSize: 64, textAlign: "center", marginTop: 60 }}>🍸</Text>
+            <Text style={{ fontSize: 64, textAlign: "center", marginTop: 40 }}>🍸</Text>
             <Text style={{ color: "#fff", textAlign: "center", fontWeight: "700", marginTop: 12 }}>Real Boards • Riverside</Text>
-            <Text style={{ color: "#9CA3AF", textAlign: "center", fontSize: 11, marginTop: 6 }}>68 real menus from your events</Text>
+            <Text style={{ color: "#9CA3AF", textAlign: "center", fontSize: 11, marginTop: 6 }}>68 real menus + Batch Calculator</Text>
+            <Pressable onPress={() => Linking.openURL("https://barbatchbible.netlify.app")} style={{ backgroundColor: "#F59E0B", marginHorizontal: 24, marginTop: 16, padding: 12, borderRadius: 12, alignItems: "center" }}>
+              <Text style={{ color: "#000", fontWeight: "800", fontSize: 12 }}>📖 BAR BATCH BIBLE →</Text>
+              <Text style={{ color: "#000", fontSize: 10, marginTop: 2 }}>Batch calculator for parties</Text>
+            </Pressable>
             <View style={[styles.float, { top: 12, right: 12 }]}><Text style={styles.floatText}>NEXT • Marina — 02.14.26</Text></View>
             <View style={[styles.float, { bottom: 18, left: 12 }]}><Text style={styles.floatText}>🌸 Riverside & Rowland Heights</Text></View>
           </View>
           <View style={{ flexDirection: "row", gap: 12 }}>
+            <Pressable onPress={() => Linking.openURL("https://barbatchbible.netlify.app")} style={[styles.small, styles.smallCenter, { backgroundColor: "#1a1500", borderColor: "#F59E0B" }]}><Text style={[styles.smallText, { color: "#FDE68A" }]}>📖 Batch Bible{"\n"}Calculator</Text></Pressable>
             <View style={[styles.small, styles.smallCenter]}><Text style={styles.smallText}>Custom Cups{"\n"}Patty Ramirez</Text></View>
-            <View style={[styles.small, styles.smallCenter]}><Text style={styles.smallText}>Custom Signs{"\n"}Borra-guita</Text></View>
           </View>
         </View>
       </View>
       <View style={styles.footer}>
         <Text style={styles.footerText}>© The Mobile Mixery • @the_mobile_mixery_</Text>
-        <Pressable onPress={() => Linking.openURL("/menu/")}><Text style={[styles.footerText, { color: "#A5B4FC" }]}>Menus →</Text></Pressable>
+        <View style={{ flexDirection: "row", gap: 12, flexWrap: "wrap" }}>
+          <Pressable onPress={() => Linking.openURL("https://barbatchbible.netlify.app")}><Text style={[styles.footerText, { color: "#F59E0B", fontWeight: "700" }]}>📖 Bar Batch Bible →</Text></Pressable>
+          <Pressable onPress={() => Linking.openURL("/menu/")}><Text style={[styles.footerText, { color: "#A5B4FC" }]}>Menus →</Text></Pressable>
+          <Pressable onPress={() => Linking.openURL("/gallery/")}><Text style={[styles.footerText, { color: "#A5B4FC" }]}>Gallery →</Text></Pressable>
+        </View>
       </View>
     </ScrollView>
   );
@@ -51,6 +62,8 @@ const styles = StyleSheet.create({
   navLink: { color: "#9CA3AF", fontSize: 11 },
   pill: { backgroundColor: "#fff", paddingHorizontal: 16, paddingVertical: 8, borderRadius: 999 },
   pillText: { color: "#000", fontWeight: "600", fontSize: 12 },
+  batchPill: { backgroundColor: "#F59E0B", paddingHorizontal: 16, paddingVertical: 8, borderRadius: 999 },
+  batchPillText: { color: "#000", fontWeight: "700", fontSize: 11 },
   badge: { borderWidth: 1, borderColor: "#2a2f5a", backgroundColor: "#151735", borderRadius: 999, paddingHorizontal: 12, paddingVertical: 6, alignSelf: "flex-start", marginBottom: 12 },
   badgeText: { color: "#A5B4FC", fontSize: 10 },
   hero: { flexDirection: "row", maxWidth: 1280, alignSelf: "center", padding: 24, gap: 24, marginTop: 20 },
@@ -59,6 +72,8 @@ const styles = StyleSheet.create({
   h1Purple: { color: "#8B5CF6" },
   sub: { color: "#CBD5E1", lineHeight: 22, maxWidth: 500, marginBottom: 20, fontSize: 15 },
   ctas: { flexDirection: "row", gap: 12, flexWrap: "wrap" },
+  btnBatch: { backgroundColor: "#F59E0B", paddingHorizontal: 20, paddingVertical: 12, borderRadius: 999 },
+  btnBatchText: { color: "#000", fontWeight: "800" },
   btnPrimary: { backgroundColor: "#8B5CF6", paddingHorizontal: 20, paddingVertical: 12, borderRadius: 999 },
   btnPrimaryText: { color: "#fff", fontWeight: "600" },
   btnIg: { backgroundColor: "#fff", paddingHorizontal: 20, paddingVertical: 12, borderRadius: 999, borderWidth: 1, borderColor: "#E1306C" },
@@ -71,6 +86,6 @@ const styles = StyleSheet.create({
   small: { flex: 1, height: 120, borderRadius: 16, borderWidth: 1, borderColor: "#22264a", backgroundColor: "#141626" },
   smallCenter: { justifyContent: "center", alignItems: "center" },
   smallText: { color: "#fff", fontSize: 11, textAlign: "center", fontWeight: "600" },
-  footer: { borderTopWidth: 1, borderTopColor: "#1c2040", padding: 20, flexDirection: "row", justifyContent: "space-between", marginTop: 30 },
+  footer: { borderTopWidth: 1, borderTopColor: "#1c2040", padding: 20, flexDirection: "row", justifyContent: "space-between", marginTop: 30, flexWrap: "wrap", gap: 10 },
   footerText: { color: "#6B7280", fontSize: 11 },
 });
