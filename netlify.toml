@@ -1,8 +1,12 @@
+# Build the Expo web app
 [build]
   command = "cd frontend && npm install && npx expo export --platform web"
   publish = "frontend/dist"
 
-# Short link: themobilemixeryca.com/batch → Bar Batch Bible
+[build.environment]
+  NODE_VERSION = "22"
+
+# --- BATCH BIBLE SHORT LINKS ---
 [[redirects]]
   from = "/batch"
   to = "https://barbatchbible.netlify.app"
@@ -15,16 +19,22 @@
   status = 302
   force = true
 
-# Short link: themobilemixeryca.com/bible → Bar Batch Bible
 [[redirects]]
   from = "/bible"
   to = "https://barbatchbible.netlify.app"
   status = 302
   force = true
 
+# --- FIX FOR /menu/ 404 ---
+# IMPORTANT: Let /menu/ serve its own file - must be BEFORE the /* catch-all
 [[redirects]]
-  from = "/api/*"
-  to = "/.netlify/functions/api/:splat"
+  from = "/menu"
+  to = "/menu/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/menu/"
+  to = "/menu/index.html"
   status = 200
 
 [[redirects]]
@@ -32,6 +42,27 @@
   to = "/menu/:splat"
   status = 200
 
+[[redirects]]
+  from = "/gallery"
+  to = "/gallery/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/gallery/"
+  to = "/gallery/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/gallery/*"
+  to = "/gallery/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+# Catch-all - MUST BE LAST
 [[redirects]]
   from = "/*"
   to = "/index.html"
