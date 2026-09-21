@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Batch OS — The Mobile Mixery | $29/mo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<style>
+:root{--cream:#FFF9F5;--paper:#FFFFFF;--ink:#111;--muted:#8A847A;--line:#E8DDD0;--coral:#C26A4A;--yellow:#F5B400;--green:#2E7D32}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--cream);color:var(--ink);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.nav{position:sticky;top:0;z-index:20;background:rgba(255,249,245,.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;padding:10px 14px}
+.logo{font-weight:800;letter-spacing:2px;font-size:11px;display:flex;align-items:center;gap:8px}.dot{width:8px;height:8px;background:var(--coral);border-radius:50%;display:inline-block}
+.wrap{max-width:1180px;margin:0 auto;padding:14px 14px 100px}
+.view{display:none;animation:fade .25s ease}.view.on{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.badge{border:1px solid var(--line);background:var(--paper);border-radius:999px;padding:6px 12px;font-size:10px;letter-spacing:1px;color:var(--muted);display:inline-block}
+.h1{font-family:Georgia,serif;font-size:38px;line-height:.9;margin:8px 0;font-weight:400}.h1 b{font-weight:800}.h1 i{font-style:italic;color:var(--coral)}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:14px;position:relative;overflow:hidden}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:800px){.grid2{grid-template-columns:1fr}}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}@media(max-width:900px){.grid3{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.grid3{grid-template-columns:1fr}}
+.search{width:100%;background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:11px 16px;font-size:13px}
+.chip{background:#fff;border:1px solid var(--line);border-radius:999px;padding:7px 13px;font-size:11px;font-weight:700;color:var(--muted);cursor:pointer}.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn{padding:10px 16px;border-radius:999px;font-weight:800;font-size:11px;display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--ink);cursor:pointer;text-decoration:none;background:#fff;color:var(--ink)}.btn-dark{background:var(--ink);color:#fff}.btn-coral{background:var(--coral);color:#fff;border-color:var(--coral)}.btn-yellow{background:var(--yellow);color:#000;border-color:var(--yellow)}
+.input{width:100%;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:12px;font-size:13px}
+.kbd{font-family:monospace;background:var(--cream);border:1px solid var(--line);border-bottom-width:2px;border-radius:8px;padding:2px 6px;font-size:11px}
+.bottom{position:fixed;bottom:0;left:0;right:0;z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(16px);border-top:1px solid var(--line);display:flex;justify-content:space-around;padding:8px 4px 18px}
+.btab{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--muted);cursor:pointer;min-width:54px;padding:4px 6px;border-radius:12px}.btab.on{color:var(--coral);background:rgba(194,106,74,.08);font-weight:800}
+.notice{background:var(--paper);border:1px dashed var(--line);border-radius:14px;padding:12px;font-size:11px;color:var(--muted);line-height:1.6}
+.proLock{position:relative}.proLock:after{content:"PRO";position:absolute;top:8px;right:8px;background:var(--coral);color:#fff;font-size:8px;font-weight:800;letter-spacing:1px;padding:3px 7px;border-radius:999px}
+</style>
+</head>
+<body>
+<div class="nav">
+  <div class="logo"><span class="dot"></span> THE MOBILE MIXERY • BATCH OS</div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <a href="/" class="badge" style="text-decoration:none">← themobilemixeryca.com</a>
+    <a href="https://buy.stripe.com/aFadR8cuLduyfn9aEv3AY0a" target="_blank" class="btn btn-coral" style="padding:6px 12px">Subscribe $29/mo</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <!-- HOME -->
+  <div class="view on" id="view-home">
+    <span class="badge">● LIVE ON YOUR DOMAIN: themobilemixeryca.com/app • NO MORE NETLIFY LINK</span>
+    <div class="h1">Bar Tools,<br><i>Batched.</i><br>Menus,<br><b>Mobile.</b></div>
+    <p style="color:var(--muted);font-size:13px;line-height:1.7;max-width:640px">This is your subscription app — the one you pasted. Now lives <b>inside your website</b> at <code>/app</code>. 12 proven batch specs, calculator (guests → gallons → bottles → ice), 10 syrups scaled to 1 gal, events, plus <b>NEW: Real Menus Gallery (20 boards)</b> from your site. $29/mo via Stripe — monthly, yearly, lifetime all same link per your setup.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+      <button class="btn btn-dark" onclick="go('recipes')">📖 12 Recipes →</button>
+      <button class="btn btn-coral" onclick="go('calc')">🧮 Calculator →</button>
+      <button class="btn btn-yellow" onclick="go('menus')">🪧 Real Menus (20) NEW</button>
+      <button class="btn" onclick="go('syrups')">🧪 Syrup Lab</button>
+      <a class="btn" href="https://barbatchbible.netlify.app" target="_blank">📖 Bar Batch Bible</a>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <div class="card"><b>Guests → Gallons → Bottles → Ice</b><br><span style="font-size:11px;color:var(--muted)">Enter guest count + pour size, get total gallons, 750ml bottles, ice lbs, batch size.</span><div style="margin-top:10px"><button class="btn btn-coral" onclick="go('calc')">Open Calculator</button></div></div>
+      <div class="card"><b>12 Proven Batch Specs</b><br><span style="font-size:11px;color:var(--muted)">Mangonada, Cherry Blossom-tini, Watermelon Mojito, Blue Malibu Twist, etc. Scaled to 1 gal, 2.5 gal, 5 gal.</span><div style="margin-top:10px"><button class="btn btn-dark" onclick="go('recipes')">Open Recipes</button></div></div>
+    </div>
+  </div>
+
+  <!-- RECIPES — 12 RECIPES -->
+  <div class="view" id="view-recipes">
+    <h2 style="font-family:Georgia,serif;margin:0">Bar Batch Bible — 12 Recipes</h2>
+    <p style="color:var(--muted);font-size:12px">Tap to scale. Each shows 1 gal / 2.5 gal / 5 gal + garnish, flavor, base. Links to Real Menus gallery.</p>
+    <input id="rq" class="search" placeholder="Search Mangonada, Sake, Tajin, Blue, Pink..."/>
+    <div id="rgrid" class="grid2" style="margin-top:12px"></div>
+  </div>
+
+  <!-- CALCULATOR -->
+  <div class="view" id="view-calc">
+    <h2 style="font-family:Georgia,serif;margin:0">Batch Calculator</h2>
+    <div class="grid2" style="margin-top:12px">
+      <div class="card">
+        <label style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--muted)">GUESTS</label><input id="guests" class="input" type="number" value="100" min="1"/>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+          <div><label style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--muted)">DRINKS PER GUEST</label><input id="dpg" class="input" type="number" value="2.5" step="0.5"/></div>
+          <div><label style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--muted)">POUR SIZE (oz)</label><input id="pour" class="input" type="number" value="5" step="0.5"/></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px">
+          <div><label style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--muted)">BATCH SIZE (gal)</label><select id="batchSize" class="input"><option value="1">1 gal</option><option value="2.5" selected>2.5 gal</option><option value="5">5 gal</option></select></div>
+          <div><label style="font-size:10px;font-weight:700;letter-spacing:1px;color:var(--muted)">SELECT RECIPE</label><select id="recipeSel" class="input"></select></div>
+        </div>
+        <button class="btn btn-coral" style="width:100%;margin-top:12px" onclick="calc()">Calculate →</button>
+      </div>
+      <div class="card" id="calcOut" style="background:var(--cream)"><b>Results</b><div style="font-size:12px;color:var(--muted);margin-top:6px">Enter guests and tap Calculate. Shows total drinks, total gallons, 750ml bottles, ice, and scaled recipe for your chosen batch.</div></div>
+    </div>
+  </div>
+
+  <!-- SYRUPS — 10 SYRUPS -->
+  <div class="view" id="view-syrups">
+    <h2 style="font-family:Georgia,serif;margin:0">Syrup Lab — 10 House Syrups</h2>
+    <p style="color:var(--muted);font-size:12px">Scaled to 1 gal. Tap to scale to 2.5 gal / 5 gal.</p>
+    <div id="sgrid" class="grid3"></div>
+  </div>
+
+  <!-- MENUS — NEW 20 BOARDS -->
+  <div class="view" id="view-menus">
+    <h2 style="font-family:Georgia,serif;margin:0">Real Custom Menus — Gallery (20) NEW</h2>
+    <p style="color:var(--muted);font-size:12px;max-width:700px">Every board designer-designed to match theme — floral tile, neon 60th, arcade Pac-Man, black & gold PEREZ, gothic skulls. Logo subtle 6% watermark like you loved. Each links to Batch Bible + Calculator.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0"><input id="mq" class="search" style="flex:1;min-width:220px" placeholder="Search French, Arcade, 50th, Halloween, Pink..."/><button class="btn" onclick="document.getElementById('mq').value='';mq='';renderMenus()">Clear</button></div>
+    <div id="mchips" style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px"></div>
+    <div id="mgrid" class="grid3"></div>
+  </div>
+
+  <!-- EVENTS -->
+  <div class="view" id="view-events">
+    <h2 style="font-family:Georgia,serif;margin:0">Events — Builder</h2>
+    <div class="notice" style="margin-top:10px">Event builder from your original app — guests, date, menu boards chosen, batch totals, ice, custom cups. This preview keeps it simple; full logic lives in your original Netlify app file if you want it merged.</div>
+    <div class="card" style="margin-top:12px"><b>Quick Event Quote</b><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px"><input class="input" placeholder="Event name (Carolyn's 50th)"/><input class="input" placeholder="Date"/><input class="input" placeholder="Guests"/><input class="input" placeholder="Vibe (Fiesta)"/></div><button class="btn btn-dark" style="margin-top:10px" onclick="go('calc')">Price in Calculator →</button></div>
+  </div>
+
+  <!-- ACCOUNT / STRIPE -->
+  <div class="view" id="view-account">
+    <h2 style="font-family:Georgia,serif;margin:0">Account — $29/mo • Monthly, Yearly, Lifetime</h2>
+    <div class="grid2" style="margin-top:12px">
+      <div class="card"><b>Subscribe — Same link for all plans</b><p style="font-size:12px;color:var(--muted)">Per your setup: monthly, yearly, lifetime all use same Stripe link.</p><a class="btn btn-coral" href="https://buy.stripe.com/aFadR8cuLduyfn9aEv3AY0a" target="_blank" style="width:100%">Subscribe $29/mo → Stripe</a><div style="margin-top:10px;font-size:10px;color:var(--muted)">After subscribing you get full batch specs + calculator + syrups. Manage at Stripe portal.</div></div>
+      <div class="card" style="background:var(--cream)"><b>How this lives on your website</b><div style="font-size:11px;color:var(--muted);line-height:1.7;margin-top:6px">1. This file is <code>landing/app/index.html</code> in your GitHub repo.<br>2. It makes <code>themobilemixeryca.com/app</code> serve the app directly — no more Netlify subdomain.<br>3. Your main site at <code>themobilemixeryca.com</code> → iframe or tab points to <code>/app/</code> → app inside website as requested.<br>4. Update Expo: <code>frontend/app/batch/index.tsx</code> → WebView src <code>/app/</code>.</div><a class="btn btn-dark" href="/" style="margin-top:10px">← Back to Main Site</a></div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom" id="bottom"></div>
+
+<script>
+// --- DATA ---
+const RECIPES=[
+  {name:"Cherry Blossom-tini",base:"Sake / Gin",season:"Spring",color:"Pink",garnish:"Cherry lemon or flower",flavors:["Cranberry","citrus"],ing:{sake:"750ml",gin:"750ml",triple:"8oz",cran:"24oz",citrus:"12oz"}},
+  {name:"Mangonada",base:"Tequila",season:"Summer",color:"Orange",garnish:"Chamoy, tajin",flavors:["Spicy","sweet","fruity"],ing:{tequila:"1 bottle",mango:"64oz",chamoy:"8oz",tajin:"to rim"}},
+  {name:"Watermelon Mojito",base:"Rum",season:"Summer",color:"Red",garnish:"Mint, watermelon",flavors:["Fresh","fruity","minty"],ing:{rum:"750ml",watermelon:"48oz",mint:"2 bunches",lime:"12oz"}},
+  {name:"Blue Malibu Twist",base:"Rum",season:"Summer",color:"Blue",garnish:"pineapple cherry coconut rim",flavors:["Coconut","tropical"],ing:{rum:"750ml",malibu:"750ml",blue:"8oz",pine:"32oz"}},
+  {name:"Patty Ramirez Mojito",base:"Rum",season:"Summer",color:"Green",garnish:"Custom cups in honor of",flavors:["Mint","lime"],ing:{rum:"1.5L",mint:"3 bunches",lime:"16oz",simple:"24oz"}},
+  {name:"Margarita Bar Classic",base:"Tequila",season:"Spring",color:"Yellow",garnish:"Lime, salt",flavors:["Citrus","classic"],ing:{tequila:"1L",cointreau:"12oz",lime:"24oz",agave:"12oz"}},
+  {name:"Paloma & Cantaritos",base:"Tequila",season:"Summer",color:"Pink",garnish:"Grapefruit, tajin",flavors:["Grapefruit","salty"],ing:{tequila:"1L",grapefruit:"48oz",lime:"12oz",squirt:"to top"}},
+  {name:"Tequila Sunrise & Sunset",base:"Tequila",season:"Summer",color:"Orange",garnish:"Orange, cherry",flavors:["Sunrise"],ing:{tequila:"750ml",oj:"64oz",grenadine:"8oz"}},
+  {name:"Spiked Horchata & RumChata",base:"RumChata",season:"Fall",color:"White",garnish:"Cinnamon",flavors:["Creamy","horchata"],ing:{rumchata:"1L",horchata:"64oz",cinnamon:"garnish"}},
+  {name:"Pina Colada & Coquito",base:"Rum",season:"Summer",color:"White",garnish:"Coconut, pineapple",flavors:["Tropical"],ing:{rum:"750ml",coco:"32oz",pine:"32oz",cream:"16oz"}},
+  {name:"Rosé & Spritz Bar",base:"Rosé / Aperol",season:"Summer",color:"Pink",garnish:"Floral, hibiscus",flavors:["Floral","spritz"],ing:{rose:"1.5L",aperol:"12oz",soda:"24oz",hibiscus:"garnish"}},
+  {name:"Bloody Mary Bar",base:"Vodka",season:"Fall",color:"Red",garnish:"Celery, tajin, olives",flavors:["Savory","brunch"],ing:{vodka:"1L",bloodyMix:"64oz",clamato:"16oz",garnishes:"bar"}},
+];
+const SYRUPS=[
+  {name:"Hibiscus",ratio:"1:1 sugar:water + hibiscus 4oz per gal",yield:"1 gal"},
+  {name:"Mango Chamoy",ratio:"Mango 64oz + chamoy 12oz + tajin 2tbsp per gal"},
+  {name:"Mint Simple",ratio:"1:1 sugar:water + mint 3 bunches per gal"},
+  {name:"Tamarind",ratio:"Tamarind pulp 16oz + sugar 2lb per gal"},
+  {name:"Jalapeño",ratio:"Jalapeño 8oz sliced + 1:1 simple per gal"},
+  {name:"Coconut Cream",ratio:"Coco Lopez 32oz + coconut milk 32oz per gal"},
+  {name:"Cinnamon Horchata",ratio:"Rice milk + cinnamon + sugar per gal"},
+  {name:"Rosé Reduction",ratio:"Rosé 1 bottle reduced + sugar per gal"},
+  {name:"Citrus Agave",ratio:"Lime/lemon 24oz + agave 16oz per gal"},
+  {name:"Spiced Orange",ratio:"OJ 32oz + cinnamon + clove + sugar per gal"},
+];
+const BOARDS=[
+  {id:"french",name:"French Menu",theme:"Pink Floral Tile",vibe:"Wedding",season:"Spring",colors:["Pink","White"]},
+  {id:"arcade",name:"Ezra Arcade - Pac-Man",theme:"Arcade Birthday - Cherry Blossom-tini",vibe:"Birthday",season:"Spring",colors:["Pink","Yellow","Neon"]},
+  {id:"ramiro",name:"Ramiro 50th - PEREZ",theme:"50th Black & Gold",vibe:"Birthday",season:"Fall",colors:["Black","Gold"]},
+  {id:"gothic",name:"Gothic Halloween - Skulls",theme:"Halloween Gothic Skulls",vibe:"Halloween",season:"Fall",colors:["Black","Red"]},
+  {id:"fairy",name:"Fairy Garden",theme:"Garden Party - Pastel",vibe:"Birthday",season:"Spring",colors:["Pink","Green"]},
+  {id:"camilla",name:"Camilla's Sweet 16 - Western",theme:"Sweet 16 Cowboy Boots - Lime-Sunrise",vibe:"Birthday",season:"Summer",colors:["Brown","Pink"]},
+  {id:"carolyn",name:"Carolyn's 50th Fiesta",theme:"Papel Picado Fiesta - Mangonada + Paloma",vibe:"Fiesta",season:"Summer",colors:["Orange","Pink"]},
+  {id:"millans",name:"The Millan's Wedding",theme:"Wedding - Open Bar + Beer Menu",vibe:"Wedding",season:"Summer",real:true,colors:["Gold","Black"]},
+  {id:"grad",name:"Grad Rooftop - Pink & Purple",theme:"Real Client Tag @the_mobile_mixery_ - Cherry + Pineapple",vibe:"Graduation",season:"Summer",real:true,colors:["Pink","Purple"]},
+  {id:"patty",name:"Patty Ramirez - Custom Cups",theme:"Custom Cups In Honor Of - Mojito Station",vibe:"Birthday",season:"Summer",colors:["Green","White"]},
+  {id:"borraguita",name:"Borra-guita Bonita",theme:"Whiskey Sour & Old Fashioned",vibe:"Fiesta",season:"Fall",colors:["Amber","Brown"]},
+  {id:"margarita",name:"Margarita Bar",theme:"Classic Lime, Strawberry, Mango",vibe:"Wedding",season:"Spring",colors:["Yellow","Pink","Orange"]},
+  {id:"mojito",name:"Mojito Station",theme:"Custom Cups In Honor Of - Mint",vibe:"Wedding",season:"Summer",colors:["Green"]},
+  {id:"paloma",name:"Paloma & Cantaritos",theme:"Grapefruit Tajin Rim",vibe:"Fiesta",season:"Summer",colors:["Pink"]},
+  {id:"tequila-sunrise",name:"Tequila Sunrise & Sunset",theme:"Neon 60th",vibe:"Birthday",season:"Summer",colors:["Orange","Red"]},
+  {id:"horchata",name:"Spiked Horchata & RumChata",theme:"Late Night Creamy",vibe:"Fiesta",season:"Fall",colors:["White","Brown"]},
+  {id:"michelada",name:"Michelada Bar",theme:"Clamato + Tajin",vibe:"Fiesta",season:"Summer",colors:["Red"]},
+  {id:"pina",name:"Pina Colada & Coquito",theme:"Tropical Coconut",vibe:"Tropical",season:"Summer",colors:["White","Blue"]},
+  {id:"rose",name:"Rosé & Spritz Bar",theme:"Floral Garnish - Hibiscus Spritz",vibe:"Wedding",season:"Summer",colors:["Pink","Red"]},
+  {id:"bloody",name:"Bloody Mary Bar",theme:"Brunch Service",vibe:"Brunch",season:"Fall",colors:["Red","Green"]},
+];
+
+// --- NAV ---
+const TABS=[["home","Home","🏠"],["recipes","Recipes","📖"],["calc","Calc","🧮"],["syrups","Syrups","🧪"],["menus","Menus","🪧"],["events","Events","📅"],["account","Account","💳"]];
+let active="home", mq="", rq="", mFilter="All";
+function go(id){active=id;document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));document.getElementById('view-'+id).classList.add('on');renderBottom();window.scrollTo(0,0);history.replaceState(null,'','#'+id);}
+function renderBottom(){const b=document.getElementById('bottom');b.innerHTML='';TABS.forEach(([id,label,icon])=>{const d=document.createElement('div');d.className='btab'+(active===id?' on':'');d.innerHTML=`<div style="font-size:20px">${icon}</div><div>${label}</div>`;d.onclick=()=>go(id);b.appendChild(d);});}
+renderBottom();
+
+// --- RECIPES ---
+function renderRecipes(){const q=rq.toLowerCase();const g=document.getElementById('rgrid');g.innerHTML='';RECIPES.filter(r=>!q||[r.name,r.base,r.season,r.color,r.garnish,...r.flavors].join(' ').toLowerCase().includes(q)).forEach(r=>{const el=document.createElement('div');el.className='card';el.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:flex-start"><b>${r.name}</b><span style="font-size:10px;background:var(--cream);border:1px solid var(--line);border-radius:999px;padding:3px 8px">${r.vibe||r.season} • ${r.color}</span></div><div style="font-size:11px;color:var(--muted);margin-top:6px"><b>Base:</b> ${r.base} • <b>Garnish:</b> ${r.garnish}</div><div style="font-size:11px;margin-top:6px">Flavors: ${r.flavors.join(', ')}</div><div style="font-size:11px;margin-top:6px;color:var(--muted)">${Object.entries(r.ing).map(([k,v])=>`<span class="kbd">${k}: ${v}</span>`).join(' ')}</div><div style="display:flex;gap:6px;margin-top:10px"><button class="btn btn-yellow" onclick="document.getElementById('recipeSel').value='${r.name}';go('calc')">Batch in Calculator →</button><button class="btn" onclick="go('menus')">See Menu Board</button></div>`;g.appendChild(el);});}
+document.getElementById('rq')?.addEventListener('input',e=>{rq=e.target.value;renderRecipes();});
+renderRecipes();
+const sel=document.getElementById('recipeSel');RECIPES.forEach(r=>{const o=document.createElement('option');o.value=r.name;o.textContent=r.name;sel.appendChild(o);});
+
+// --- SYRUPS ---
+function renderSyrups(){const g=document.getElementById('sgrid');g.innerHTML='';SYRUPS.forEach(s=>{const el=document.createElement('div');el.className='card';el.innerHTML=`<b>${s.name}</b><div style="font-size:11px;color:var(--muted);margin-top:4px">${s.ratio}</div><div style="margin-top:8px;display:flex;gap:6px"><span class="kbd">1 gal</span><span class="kbd">2.5 gal ×2.5</span><span class="kbd">5 gal ×5</span></div>`;g.appendChild(el);});}
+renderSyrups();
+
+// --- MENUS ---
+const MFILTERS=["All","Wedding","Birthday","Fiesta","Halloween","Tropical","Graduation","50th","Sweet 16","Brunch"];
+function renderMenus(){const g=document.getElementById('mgrid');const c=document.getElementById('mchips');c.innerHTML='';MFILTERS.forEach(f=>{const b=document.createElement('button');b.className='chip'+(mFilter===f?' on':'');b.textContent=f;b.onclick=()=>{mFilter=f;renderMenus();};c.appendChild(b);});g.innerHTML='';BOARDS.filter(b=>{if(mFilter!=='All'&&!b.vibe.toLowerCase().includes(mFilter.toLowerCase())&&!b.name.toLowerCase().includes(mFilter.toLowerCase()))return false;if(mq){const hay=[b.name,b.theme,...b.colors,b.vibe].join(' ').toLowerCase();if(!hay.includes(mq.toLowerCase()))return false;}return true;}).forEach(b=>{const el=document.createElement('div');el.className='card';el.innerHTML=`<div style="height:200px;background:#EDE6D8;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative"><div style="font-size:36px">🪧</div><b style="font-size:12px;margin-top:6px">${b.name}</b><small style="color:var(--muted)">${b.theme}</small><div style="position:absolute;top:8px;left:8px;background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 8px;font-size:9px;font-weight:700">${b.vibe} • ${b.season}</div>${b.real?'<div style="position:absolute;bottom:8px;right:8px;background:#F5B400;padding:4px 8px;border-radius:999px;font-size:8px;font-weight:800">REAL WORK</div>':''}<div style="position:absolute;bottom:36px;opacity:.06;font-weight:800;font-size:28px;transform:rotate(-10deg)">MIXERY</div></div><div style="margin-top:10px"><b style="font-size:13px">${b.name}</b><div style="font-size:11px;color:var(--muted)">${b.theme}</div><div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:6px">${b.colors.map(col=>`<span style="border:1px solid var(--line);border-radius:999px;padding:2px 7px;font-size:9px;background:#fff">${col}</span>`).join('')}</div><div style="display:flex;gap:6px;margin-top:10px"><button class="btn btn-yellow" style="flex:1" onclick="document.getElementById('recipeSel').value='${b.name}';go('calc')">📖 Batch</button><button class="btn btn-dark" style="flex:1" onclick="go('calc')">Calculator →</button></div></div>`;g.appendChild(el);});}
+document.getElementById('mq')?.addEventListener('input',e=>{mq=e.target.value;renderMenus();});
+renderMenus();
+
+// --- CALCULATOR ---
+function calc(){
+  const guests=parseFloat(document.getElementById('guests').value)||0;
+  const dpg=parseFloat(document.getElementById('dpg').value)||2.5;
+  const pour=parseFloat(document.getElementById('pour').value)||5;
+  const batch=parseFloat(document.getElementById('batchSize').value)||2.5;
+  const totalDrinks=guests*dpg;
+  const totalOz=totalDrinks*pour;
+  const totalGal=totalOz/128;
+  const bottles=Math.ceil(totalOz/25.4);
+  const ice=Math.ceil(guests*1.5);
+  const batchesNeeded=Math.ceil(totalGal/batch);
+  const out=document.getElementById('calcOut');
+  out.innerHTML=`<b>Results — ${guests} guests × ${dpg} drinks</b><div style="margin-top:10px;display:grid;gap:8px">
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--muted);font-size:11px">TOTAL DRINKS</span><b>${totalDrinks.toFixed(1)}</b></div>
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--muted);font-size:11px">TOTAL OZ / GAL</span><b>${totalOz.toFixed(0)} oz • ${totalGal.toFixed(2)} gal</b></div>
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--muted);font-size:11px">750ML BOTTLES</span><b>${bottles}</b></div>
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--muted);font-size:11px">ICE (lbs, 1.5lb/guest)</span><b>${ice} lbs</b></div>
+    <div style="display:flex;justify-content:space-between"><span style="color:var(--muted);font-size:11px">${batch} GAL BATCHES NEEDED</span><b>${batchesNeeded}</b></div>
+    <div class="notice">Scaled recipe for <b>${document.getElementById('recipeSel').value}</b> @ ${batch} gal: multiply 1-gal spec × ${batch}. Use Syrup Lab for syrups.</div>
+    <a class="btn btn-coral" style="width:100%" href="https://buy.stripe.com/aFadR8cuLduyfn9aEv3AY0a" target="_blank">Lock In $29/mo →</a>
+  </div>`;
+}
+if(location.hash){const h=location.hash.replace('#','');if(TABS.map(t=>t[0]).includes(h)) go(h);}
+</script>
+</body>
+</html>
