@@ -8,7 +8,7 @@
 
 # --- BATCH BIBLE SHORT LINKS ---
 [[redirects]]
-  ffrom = "/app/*"
+  from = "/app/*"
   to = "/app/:splat"
   status = 200
 
