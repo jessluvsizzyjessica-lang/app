@@ -1,16 +1,28 @@
-# Build the Expo web app
+# Build the Expo web app + copy your landing/app into it
 [build]
-  command = "cd frontend && npm install && npx expo export --platform web"
+  command = "cd frontend && npm install && npx expo export --platform web && mkdir -p dist/app && cp -r ../landing/app/* dist/app/ 2>/dev/null || true"
   publish = "frontend/dist"
 
 [build.environment]
   NODE_VERSION = "22"
 
-# --- BATCH BIBLE SHORT LINKS ---
+# --- YOUR APP stays on YOUR domain ---
+[[redirects]]
+  from = "/app"
+  to = "/app/index.html"
+  status = 200
+
 [[redirects]]
   from = "/app/*"
   to = "/app/:splat"
   status = 200
+
+# --- BATCH BIBLE short links (external) ---
+[[redirects]]
+  from = "/batch"
+  to = "https://barbatchbible.netlify.app"
+  status = 302
+  force = true
 
 [[redirects]]
   from = "/batch/*"
@@ -24,8 +36,7 @@
   status = 302
   force = true
 
-# --- FIX FOR /menu/ 404 ---
-# IMPORTANT: Let /menu/ serve its own file - must be BEFORE the /* catch-all
+# --- FIX FOR /menu/ 404 - must be BEFORE /* ---
 [[redirects]]
   from = "/menu"
   to = "/menu/index.html"
@@ -61,7 +72,7 @@
   to = "/.netlify/functions/api/:splat"
   status = 200
 
-# Catch-all - MUST BE LAST
+# Expo SPA fallback - MUST be last
 [[redirects]]
   from = "/*"
   to = "/index.html"
