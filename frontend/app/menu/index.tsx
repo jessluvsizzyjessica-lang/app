@@ -1,3 +1,4 @@
+
 import { View, Text, ScrollView, Pressable, Linking, TextInput, Image } from "react-native";
 import { useState, useMemo } from "react";
 
