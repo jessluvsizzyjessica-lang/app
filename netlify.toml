@@ -8,10 +8,9 @@
 
 # --- BATCH BIBLE SHORT LINKS ---
 [[redirects]]
-  from = "/batch"
-  to = "https://barbatchbible.netlify.app"
-  status = 302
-  force = true
+  ffrom = "/app/*"
+  to = "/app/:splat"
+  status = 200
 
 [[redirects]]
   from = "/batch/*"
