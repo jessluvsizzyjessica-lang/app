@@ -24,7 +24,7 @@ export default function Home() {
       <View style={[styles.hero, isMobile && { flexDirection: "column" }]}>
         <View style={{ flex: 1.1 }}>
           <View style={styles.badge}><Text style={styles.badgeText}>● RIVERSIDE, CA • BOOKING SPRING '26 • REAL EVENTS</Text></View>
-          <Text style={styles.h1}>Cocktails,{"\n"}<Text style={styles.h1Light}>Curated.</Text>{"\n"}Bar,{"\n"}<Text style={styles.h1Purple}>Mobile.</Text></Text>
+          <Text style={[styles.h1, isMobile && { fontSize: 40, lineHeight: 42 }]}>Cocktails,{"\n"}<Text style={styles.h1Light}>Curated.</Text>{"\n"}Bar,{"\n"}<Text style={styles.h1Purple}>Mobile.</Text></Text>
           <Text style={styles.sub}>
             A private bartending experience for weddings, birthdays, and late-night celebrations across Southern California. 
             We bring the bar, the craft, and the mood — you bring the people. Custom drink menus, floral garnishes, and custom cups available to take it further.
@@ -71,7 +71,7 @@ export default function Home() {
 
 const styles = StyleSheet.create({
   bg: { backgroundColor: "#0A0B14", flex: 1 },
-  nav: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: 20, borderBottomWidth: 1, borderBottomColor: "#1f2340", backgroundColor: "rgba(10,11,20,0.95)" },
+  nav: { flexDirection: "row", justifyContent: "space-between", alignItems: "center", padding: 20, flexWrap: "wrap", gap: 12, borderBottomWidth: 1, borderBottomColor: "#1f2340", backgroundColor: "rgba(10,11,20,0.95)" },
   logo: { color: "#fff", fontWeight: "700", letterSpacing: 3, fontSize: 12 },
   navLink: { color: "#9CA3AF", fontSize: 11, letterSpacing: 1 },
   pill: { backgroundColor: "#fff", paddingHorizontal: 16, paddingVertical: 8, borderRadius: 999 },
