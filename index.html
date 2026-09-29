@@ -123,8 +123,8 @@
   </div>
 
   <div id="view-gallery" class="view">
-    <h2 style="font-family:Georgia,serif;font-size:32px;margin:0">Real Custom Menus — Gallery (10)</h2>
-    <p style="color:var(--muted);font-size:12px">Real photos from real Mobile Mixery events. Find a vibe you love? Build it into your menu in the Finder tab.</p>
+    <h2 style="font-family:Georgia,serif;font-size:32px;margin:0">Gallery</h2>
+    <p style="color:var(--muted);font-size:12px">Real work — no stock. Videos from the bar, custom drink menus, and photos from real Mobile Mixery events. Find a vibe you love? Build it into your menu in the Finder tab.</p>
     <h3 style="font-family:Georgia,serif;font-size:22px;margin:20px 0 8px;font-weight:400">🎬 Watch — The Bar in Action</h3>
     <div class="videoRow">
       <div class="bioCard" style="padding:0;overflow:hidden"><video src="video_book-promo.mp4" poster="video_book-promo.jpg" controls playsinline preload="metadata" style="width:100%;height:300px;object-fit:cover;display:block"></video><p class="vcap">Time to book — pouring at a night event</p></div>
@@ -133,6 +133,10 @@
       <div class="bioCard" style="padding:0;overflow:hidden"><video src="video_pink-pour.mp4" poster="video_pink-pour.jpg" controls playsinline preload="metadata" style="width:100%;height:300px;object-fit:cover;display:block"></video><p class="vcap">The perfect pink pour</p></div>
       <div class="bioCard" style="padding:0;overflow:hidden"><video src="video_shaker-night.mp4" poster="video_shaker-night.jpg" controls playsinline preload="metadata" style="width:100%;height:300px;object-fit:cover;display:block"></video><p class="vcap">Shaker shots, straight from the bar</p></div>
     </div>
+    <h3 style="font-family:Georgia,serif;font-size:22px;margin:20px 0 8px;font-weight:400">🍸 Custom Drink Menus</h3>
+    <p style="color:var(--muted);font-size:12px">Real menus I've designed for real events — browse for ideas, steal a drink name, see what's possible. Tap any menu to see it full-size.</p>
+    <div id="menuGallery" class="galleryGrid"></div>
+    <h3 style="font-family:Georgia,serif;font-size:22px;margin:20px 0 8px;font-weight:400">📸 From Real Events</h3>
     <div id="gallery" class="galleryGrid"></div>
   </div>
 
@@ -835,13 +839,15 @@ const BOARDS = [
 
 const SEASON_ORDER = ["Spring","Summer","Fall","Winter"];
 const uniqSorted = k => [...new Set(DRINKS.map(d=>d[k]).filter(Boolean))].sort();
+const normFlavor = f => String(f).trim().replace(/^\w/, c=>c.toUpperCase());
 const GROUPS = [
   {key:"base", label:"Base", opts:uniqSorted("base")},
   {key:"season", label:"Season", opts:SEASON_ORDER.filter(s=>DRINKS.some(d=>d.season===s))},
   {key:"color", label:"Color", opts:uniqSorted("color")},
+  {key:"flavor", label:"Flavor", opts:[...new Set(DRINKS.flatMap(d=>(d.flavors||[]).map(normFlavor)))].sort()},
 ];
 
-let active = {base:new Set(), season:new Set(), color:new Set()};
+let active = {base:new Set(), season:new Set(), color:new Set(), flavor:new Set()};
 
 function renderFilterUI(){
   const c=document.getElementById('filterUI'); c.innerHTML='';
@@ -863,7 +869,8 @@ function renderDrinks(){
   const container=document.getElementById('drinks'); container.innerHTML='';
   DRINKS.filter(d=>{
     if(q && ![d.name,d.base,d.color,d.garnish,...(d.flavors||[]),...(d.tags||[])].join(' ').toLowerCase().includes(q)) return false;
-    for(const k of Object.keys(active)){ if(active[k].size && !active[k].has(d[k])) return false; }
+    for(const k of ["base","season","color"]){ if(active[k].size && !active[k].has(d[k])) return false; }
+    if(active.flavor.size && !(d.flavors||[]).map(normFlavor).some(f=>active.flavor.has(f))) return false;
     return true;
   }).forEach(d=>{
     const el=document.createElement('div'); el.className='card';
@@ -882,6 +889,38 @@ function renderGallery(){
   });
 }
 
+const MENUS = [
+  {img:"menus/celebrando-60-anos.jpg", name:"Celebrando 60 Años"},
+  {img:"menus/wildflower.jpg", name:"Wildflower Wedding"},
+  {img:"menus/floral-tile.jpg", name:"Floral Tile"},
+  {img:"menus/wykia-maykel-his-hers.jpg", name:"Wykia & Maykel — His & Hers"},
+  {img:"menus/wykia-maykel-classic.jpg", name:"Wykia & Maykel — Lavender"},
+  {img:"menus/blue-blossom.jpg", name:"Blue Blossom"},
+  {img:"menus/blush-lace.jpg", name:"Blush Lace Bridal Shower"},
+  {img:"menus/steffs-tropical.jpg", name:"Steff's Tropical"},
+  {img:"menus/burgundy-classic.jpg", name:"Burgundy Classic"},
+  {img:"menus/camillas-sweet-16.jpg", name:"Camilla's Sweet 16"},
+  {img:"menus/fairy-garden.jpg", name:"Fairy Garden"},
+  {img:"menus/carolyns-50th.jpg", name:"Carolyn's 50th Fiesta"},
+  {img:"menus/ramiro-50th.jpg", name:"Ramiro's 50th"},
+  {img:"menus/dannys-21st.jpg", name:"Danny's 21st"},
+  {img:"menus/betty-boop.jpg", name:"Betty Boop"},
+  {img:"menus/ezra-arcade.jpg", name:"Ezra's Arcade"},
+  {img:"menus/athena-cyrus-arcade.jpg", name:"Athena & Cyrus Arcade"},
+  {img:"menus/gothic-halloween.jpg", name:"Gothic Halloween"},
+  {img:"menus/albert-nicole-halloween.jpg", name:"Albert & Nicole Halloween"},
+  {img:"menus/tropical-bar-list.jpg", name:"Tropical Bar List"},
+];
+
+function renderMenus(){
+  const g=document.getElementById('menuGallery'); if(!g) return; g.innerHTML='';
+  MENUS.forEach(b=>{
+    const el=document.createElement('div'); el.className='gCard';
+    el.innerHTML=`<a href="${b.img}" target="_blank" rel="noopener"><div class="gImg" style="height:360px;background:#fff"><img class="real" src="${b.img}" alt="${b.name} — custom drink menu by The Mobile Mixery" loading="lazy" style="object-fit:contain"></div></a><div class="gBody"><b>${b.name}</b><span>Custom menu — tap to enlarge</span></div>`;
+    g.appendChild(el);
+  });
+}
+
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
   const v=t.dataset.view; if(!v) return;
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on', x.dataset.view===v));
@@ -894,7 +933,7 @@ document.getElementById('clearBtn')?.addEventListener('click', ()=>{ GROUPS.forE
 let menu=[]; try{menu=JSON.parse(localStorage.getItem('tmm_menu')||'[]')}catch(e){menu=[]}
 if(!Array.isArray(menu)) menu=[];
 menu=menu.filter(nm=>DRINKS.some(d=>d.name===nm));
-renderFilterUI(); renderDrinks(); renderGallery();
+renderFilterUI(); renderDrinks(); renderGallery(); renderMenus();
 function saveMenu(){try{localStorage.setItem('tmm_menu',JSON.stringify(menu))}catch(e){} updateFab();}
 function togglePick(nm){const k=menu.indexOf(nm); if(k>=0)menu.splice(k,1); else menu.push(nm); saveMenu(); renderDrinks(); renderMenuList();}
 function updateFab(){const n=menu.length; document.getElementById('fabCount').textContent=n; document.getElementById('menuFab').classList.toggle('show',n>0);}
