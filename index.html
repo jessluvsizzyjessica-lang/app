@@ -38,10 +38,10 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>The Mobile Mixery — Cocktails, Curated. Bar, Mobile.</title>
 <style>
-:root{--cream:#F6F1E9;--paper:#FFFCF7;--ink:#111;--muted:#8A847A;--line:#E8DDD0;--yellow:#F5B400;--purple:#8B5CF6}
+:root{--cream:#F3ECF9;--paper:#FCFAFF;--ink:#111;--muted:#8A8496;--line:#E2D6EC;--yellow:#F5B400;--purple:#8B5CF6}
 *{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui;position:relative;overflow-x:hidden}
 .watermark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-8deg);width:60vw;max-width:700px;opacity:.05;pointer-events:none;z-index:0}
-.nav{position:sticky;top:0;z-index:20;background:rgba(246,241,233,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;padding:12px 18px;flex-wrap:wrap;gap:10px}
+.nav{position:sticky;top:0;z-index:20;background:rgba(243,236,249,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;padding:12px 18px;flex-wrap:wrap;gap:10px}
 .logo-nav{display:flex;align-items:center;gap:10px}.logo-nav img{height:46px;width:auto;object-fit:contain;display:block}
 .logo-txt{font-weight:800;letter-spacing:2px;font-size:11px}
 .tabs{display:flex;gap:6px;flex-wrap:wrap}.tab{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 13px;font-size:11px;font-weight:600;color:var(--muted);cursor:pointer}.tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
@@ -64,7 +64,7 @@
 .card .wm{position:absolute;bottom:6px;right:10px;width:56px;opacity:.07;pointer-events:none}
 .card .name{font-weight:800;font-size:15px;font-family:Georgia,serif}.card .row{font-size:11px;color:var(--muted);line-height:1.5}.card .row b{color:var(--ink);font-weight:700}
 .galleryGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:900px){.galleryGrid{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.galleryGrid{grid-template-columns:1fr}}
-.gCard{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;position:relative}.gImg{height:220px;background:#EDE6D8;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}.gImg img.real{width:100%;height:100%;object-fit:cover}.gImg .wm2{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-10deg);width:70%;opacity:.08;pointer-events:none}
+.gCard{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;position:relative}.gImg{height:220px;background:#E7DCF3;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}.gImg img.real{width:100%;height:100%;object-fit:cover}.gImg .wm2{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-10deg);width:70%;opacity:.08;pointer-events:none}
 .gBody{padding:12px}.gBody b{font-size:13px;display:block}.gBody span{font-size:11px;color:var(--muted);display:block;margin-top:3px}
 .form{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px}.form label{font-size:10px;letter-spacing:1px;color:var(--muted);font-weight:700;display:block;margin:10px 0 6px}.form input,.form textarea,.form select{width:100%;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--ink);font-size:13px}
 .footer{border-top:1px solid var(--line);padding:18px 20px;color:var(--muted);font-size:11px;max-width:1240px;margin:40px auto 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;position:relative;z-index:1}
@@ -130,8 +130,8 @@
   <div id="view-bio" class="view">
     <div class="bioTab">
       <div class="bioPics">
-        <div class="bioCard" style="padding:0;overflow:hidden;background:#EDE6D8"><img class="real" src="gallery/01_neon-sign_cocktail-lineup.jpg" alt="Mobile Mixery neon sign with cocktail lineup" style="width:100%;height:320px;object-fit:cover;display:block"></div>
-        <div class="bioCard" style="padding:0;overflow:hidden;background:#EDE6D8"><img class="real" src="gallery/03_bar-marquee_drinks.jpg" alt="Lit BAR marquee setup" style="width:100%;height:320px;object-fit:cover;display:block"></div>
+        <div class="bioCard" style="padding:0;overflow:hidden;background:#E7DCF3"><img class="real" src="gallery/01_neon-sign_cocktail-lineup.jpg" alt="Mobile Mixery neon sign with cocktail lineup" style="width:100%;height:320px;object-fit:cover;display:block"></div>
+        <div class="bioCard" style="padding:0;overflow:hidden;background:#E7DCF3"><img class="real" src="gallery/03_bar-marquee_drinks.jpg" alt="Lit BAR marquee setup" style="width:100%;height:320px;object-fit:cover;display:block"></div>
       </div>
       <div class="bioCard">
         <h3>Hey, I'm Jessica — I get personal</h3>
@@ -867,7 +867,7 @@ function renderGallery(){
   const g=document.getElementById('gallery'); g.innerHTML='';
   BOARDS.forEach(b=>{
     const el=document.createElement('div'); el.className='gCard';
-    el.innerHTML=`<div class="gImg">${b.img?`<img class="real" src="${b.img}" alt="${b.name}" loading="lazy">`:'<div style="font-size:40px">\U0001FAB7</div>'}<div style="position:absolute;bottom:8px;left:8px;background:#FFFCF7;border:1px solid #E8DDD0;border-radius:999px;padding:4px 8px;font-size:9px">${b.vibe} \u2022 ${b.season}</div></div><div class="gBody"><b>${b.name}</b><span>${b.theme}</span></div>`;
+    el.innerHTML=`<div class="gImg">${b.img?`<img class="real" src="${b.img}" alt="${b.name}" loading="lazy">`:'<div style="font-size:40px">\U0001FAB7</div>'}<div style="position:absolute;bottom:8px;left:8px;background:#FCFAFF;border:1px solid #E2D6EC;border-radius:999px;padding:4px 8px;font-size:9px">${b.vibe} \u2022 ${b.season}</div></div><div class="gBody"><b>${b.name}</b><span>${b.theme}</span></div>`;
     g.appendChild(el);
   });
 }
