@@ -64,6 +64,7 @@
 .card .wm{position:absolute;bottom:6px;right:10px;width:56px;opacity:.07;pointer-events:none}
 .card .name{font-weight:800;font-size:15px;font-family:Georgia,serif}.card .row{font-size:11px;color:var(--muted);line-height:1.5}.card .row b{color:var(--ink);font-weight:700}
 .galleryGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:900px){.galleryGrid{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.galleryGrid{grid-template-columns:1fr}}
+.videoRow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:2px 0 20px}.vcap{font-size:11px;color:var(--muted);padding:8px 10px 10px;margin:0;line-height:1.4}@media(max-width:900px){.videoRow{grid-template-columns:repeat(2,1fr)}}
 .gCard{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;position:relative}.gImg{height:220px;background:#E7DCF3;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}.gImg img.real{width:100%;height:100%;object-fit:cover}.gImg .wm2{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-10deg);width:70%;opacity:.08;pointer-events:none}
 .gBody{padding:12px}.gBody b{font-size:13px;display:block}.gBody span{font-size:11px;color:var(--muted);display:block;margin-top:3px}
 .form{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:18px}.form label{font-size:10px;letter-spacing:1px;color:var(--muted);font-weight:700;display:block;margin:10px 0 6px}.form input,.form textarea,.form select{width:100%;background:var(--cream);border:1px solid var(--line);border-radius:12px;padding:12px;color:var(--ink);font-size:13px}
@@ -124,13 +125,21 @@
   <div id="view-gallery" class="view">
     <h2 style="font-family:Georgia,serif;font-size:32px;margin:0">Real Custom Menus — Gallery (10)</h2>
     <p style="color:var(--muted);font-size:12px">Real photos from real Mobile Mixery events. Find a vibe you love? Build it into your menu in the Finder tab.</p>
+    <h3 style="font-family:Georgia,serif;font-size:22px;margin:20px 0 8px;font-weight:400">🎬 Watch — The Bar in Action</h3>
+    <div class="videoRow">
+      <div class="bioCard" style="padding:0;overflow:hidden"><video src="video_book-promo.mp4" poster="video_book-promo.jpg" controls playsinline preload="metadata" style="width:100%;height:300px;object-fit:cover;display:block"></video><p class="vcap">Time to book — pouring at a night event</p></div>
+      <div class="bioCard" style="padding:0;overflow:hidden"><video src="video_pour-party.mp4" poster="video_pour-party.jpg" controls playsinline preload="metadata" style="width:100%;height:300px;object-fit:cover;display:block"></video><p class="vcap">Cocktails flowing at a party</p></div>
+      <div class="bioCard" style="padding:0;overflow:hidden"><video src="video_grad-shots.mp4" poster="video_grad-shots.jpg" controls playsinline preload="metadata" style="width:100%;height:300px;object-fit:cover;display:block"></video><p class="vcap">Pouring shots at a graduation</p></div>
+      <div class="bioCard" style="padding:0;overflow:hidden"><video src="video_pink-pour.mp4" poster="video_pink-pour.jpg" controls playsinline preload="metadata" style="width:100%;height:300px;object-fit:cover;display:block"></video><p class="vcap">The perfect pink pour</p></div>
+      <div class="bioCard" style="padding:0;overflow:hidden"><video src="video_shaker-night.mp4" poster="video_shaker-night.jpg" controls playsinline preload="metadata" style="width:100%;height:300px;object-fit:cover;display:block"></video><p class="vcap">Shaker shots, straight from the bar</p></div>
+    </div>
     <div id="gallery" class="galleryGrid"></div>
   </div>
 
   <div id="view-bio" class="view">
     <div class="bioTab">
       <div class="bioPics">
-        <div class="bioCard" style="padding:0;overflow:hidden;background:#E7DCF3"><img class="real" src="bio_jessica_bar.jpg" alt="Jessica smiling behind her mobile bar at a night event" style="width:100%;height:320px;object-fit:cover;display:block"></div>
+        <div class="bioCard" style="padding:0;overflow:hidden;background:#E7DCF3"><img class="real" src="bio_jessica_daybar.jpg" alt="Jessica smiling behind her mobile bar at a daytime event" style="width:100%;height:320px;object-fit:cover;display:block"></div>
         <div class="bioCard" style="padding:0;overflow:hidden;background:#E7DCF3"><img class="real" src="bio_jessica_portraits.jpg" alt="Black and white portraits of Jessica" style="width:100%;height:320px;object-fit:cover;display:block"></div>
       </div>
       <div class="bioCard">
