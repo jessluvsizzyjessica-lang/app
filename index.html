@@ -40,7 +40,7 @@
 <style>
 :root{--cream:#F3ECF9;--paper:#FCFAFF;--ink:#111;--muted:#8A8496;--line:#E2D6EC;--yellow:#F5B400;--purple:#8B5CF6}
 *{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:Inter,system-ui;position:relative;overflow-x:hidden}
-.watermark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-8deg);width:60vw;max-width:700px;opacity:.05;pointer-events:none;z-index:0}
+.watermark{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-8deg);width:60vw;max-width:700px;opacity:.09;pointer-events:none;z-index:0}
 .nav{position:sticky;top:0;z-index:20;background:rgba(243,236,249,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;padding:12px 18px;flex-wrap:wrap;gap:10px}
 .logo-nav{display:flex;align-items:center;gap:10px}.logo-nav img{height:46px;width:auto;object-fit:contain;display:block}
 .logo-txt{font-weight:800;letter-spacing:2px;font-size:11px}
@@ -73,7 +73,7 @@
 </style>
 </head>
 <body>
-<img class="watermark" src="https://i.imgur.com/8QJ4sQn.png" onerror="this.style.display='none'" alt="">
+<img class="watermark" src="logo.webp" alt="">
 
 <div class="nav">
   <div class="logo-nav"><img src="logo.webp" alt="The Mobile Mixery logo" style="height:46px;width:auto"><div class="logo-txt">THE MOBILE MIXERY</div></div>
@@ -122,7 +122,7 @@
   </div>
 
   <div id="view-gallery" class="view">
-    <h2 style="font-family:Georgia,serif;font-size:32px;margin:0">Real Custom Menus — Gallery (20)</h2>
+    <h2 style="font-family:Georgia,serif;font-size:32px;margin:0">Real Custom Menus — Gallery (10)</h2>
     <p style="color:var(--muted);font-size:12px">Real photos from real Mobile Mixery events. Find a vibe you love? Build it into your menu in the Finder tab.</p>
     <div id="gallery" class="galleryGrid"></div>
   </div>
@@ -852,13 +852,13 @@ function renderDrinks(){
   const q=(document.getElementById('q').value||'').toLowerCase();
   const container=document.getElementById('drinks'); container.innerHTML='';
   DRINKS.filter(d=>{
-    if(q && ![d.name,d.base,d.color,d.garnish,...d.flavors,...d.tags].join(' ').toLowerCase().includes(q)) return false;
+    if(q && ![d.name,d.base,d.color,d.garnish,...(d.flavors||[]),...(d.tags||[])].join(' ').toLowerCase().includes(q)) return false;
     for(const k of Object.keys(active)){ if(active[k].size && !active[k].has(d[k])) return false; }
     return true;
   }).forEach(d=>{
     const el=document.createElement('div'); el.className='card';
-    const _i=DRINKS.indexOf(d),_in=menu.includes(_i);
-    el.innerHTML=`<div class="name">${d.name}</div><div class="row"><b>${d.base}</b> • ${d.season} • ${d.color}${d.garnish?` • ${d.garnish}`:""}</div><div class="row">${d.flavors.join(", ")} • ${d.tags.join(", ")}</div><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button class="btn pickBtn${_in?' added':''}" onclick="togglePick(${_i})">${_in?'✓ In Your Menu':'+ My Menu'}</button><a class="btn btn-yellow" href="https://app.themobilemixeryca.com">📱 Batch OS</a><a class="btn btn-dark" href="https://mixery.gumroad.com/l/cegqx">📖 Batch Bible</a></div>`;
+    const _in=menu.includes(d.name);
+    el.innerHTML=`<div class="name">${d.name}</div><div class="row"><b>${d.base}</b> • ${d.season} • ${d.color}${d.garnish?` • ${d.garnish}`:""}</div><div class="row">${(d.flavors||[]).join(", ")} • ${(d.tags||[]).join(", ")}</div><div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap"><button class="btn pickBtn${_in?' added':''}" onclick="togglePick('${d.name.replace(/'/g,"\\'")}')">${_in?'✓ In Your Menu':'+ My Menu'}</button><a class="btn btn-yellow" href="https://app.themobilemixeryca.com">📱 Batch OS</a><a class="btn btn-dark" href="https://mixery.gumroad.com/l/cegqx">📖 Batch Bible</a></div>`;
     container.appendChild(el);
   });
 }
@@ -880,12 +880,13 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
 
 document.getElementById('q')?.addEventListener('input', renderDrinks);
 document.getElementById('clearBtn')?.addEventListener('click', ()=>{ GROUPS.forEach(g=>active[g.key]=new Set()); document.getElementById('q').value=''; renderFilterUI(); renderDrinks(); });
-renderFilterUI(); renderDrinks(); renderGallery();
-
-/* ---- My Event Menu builder ---- */
+/* ---- My Event Menu builder (menu state must exist before first render) ---- */
 let menu=[]; try{menu=JSON.parse(localStorage.getItem('tmm_menu')||'[]')}catch(e){menu=[]}
+if(!Array.isArray(menu)) menu=[];
+menu=menu.filter(nm=>DRINKS.some(d=>d.name===nm));
+renderFilterUI(); renderDrinks(); renderGallery();
 function saveMenu(){try{localStorage.setItem('tmm_menu',JSON.stringify(menu))}catch(e){} updateFab();}
-function togglePick(i){const k=menu.indexOf(i); if(k>=0)menu.splice(k,1); else menu.push(i); saveMenu(); renderDrinks(); renderMenuList();}
+function togglePick(nm){const k=menu.indexOf(nm); if(k>=0)menu.splice(k,1); else menu.push(nm); saveMenu(); renderDrinks(); renderMenuList();}
 function updateFab(){const n=menu.length; document.getElementById('fabCount').textContent=n; document.getElementById('menuFab').classList.toggle('show',n>0);}
 function openMenu(){renderMenuList(); document.getElementById('menuPanel').classList.add('open'); document.getElementById('menuOverlay').classList.add('open');}
 function closeMenu(){document.getElementById('menuPanel').classList.remove('open'); document.getElementById('menuOverlay').classList.remove('open');}
@@ -893,14 +894,14 @@ function renderMenuList(){
   const list=document.getElementById('menuList');
   document.getElementById('menuCount').textContent=menu.length?`(${menu.length} drink${menu.length>1?'s':''})`:'';
   if(!menu.length){list.innerHTML='<p style="color:var(--muted);padding:20px 0;line-height:1.6">No drinks yet &mdash; tap <b>+ My Menu</b> on any drink in the Finder to start building your event menu.</p>';return;}
-  list.innerHTML=menu.map(i=>{const d=DRINKS[i]; if(!d)return ''; return `<div class="pickRow"><div><b>${d.name}</b><div style="font-size:11px;color:var(--muted)">${d.base} &bull; ${d.color}</div></div><button class="rmBtn" onclick="togglePick(${i})">&#10005;</button></div>`}).join('');
+  list.innerHTML=menu.map(nm=>{const d=DRINKS.find(x=>x.name===nm); if(!d)return ''; const esc=nm.replace(/'/g,"\\'"); return `<div class="pickRow"><div><b>${d.name}</b><div style="font-size:11px;color:var(--muted)">${d.base} &bull; ${d.color}</div></div><button class="rmBtn" onclick="togglePick('${esc}')">&#10005;</button></div>`}).join('');
 }
 function sendMenu(){
   if(!menu.length){alert('Add a few drinks to your menu first!');return;}
   const name=document.getElementById('menuName').value.trim();
   const email=document.getElementById('menuEmail').value.trim();
   const date=document.getElementById('menuDate').value;
-  const lines=menu.map(i=>DRINKS[i]&&('\u2022 '+DRINKS[i].name)).filter(Boolean);
+  const lines=menu.map(nm=>'\u2022 '+nm);
   const details='My drink menu picks (chosen on the website):\n\n'+lines.join('\n')+'\n\nPlease include these in my quote!';
   const url='https://docs.google.com/forms/d/e/1FAIpQLSeB0YJJQn_iTzau3C8EoOCegz-WGhJEZ9mKJeWOlH0x9_6uVg/viewform?usp=pp_url'
     +'&entry.927750500='+encodeURIComponent(name)
@@ -910,6 +911,6 @@ function sendMenu(){
   window.open(url,'_blank');
 }
 updateFab();
-</script></script>
+</script>
 </body>
 </html>
