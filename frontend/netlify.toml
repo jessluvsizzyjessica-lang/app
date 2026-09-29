@@ -1,0 +1,19 @@
+# Netlify config for the Mobile Mixery Expo app site (app.themobilemixeryca.com).
+# This file is read with base directory = frontend.
+
+[build]
+  command = "npx expo export --platform web"
+  publish = "dist"
+  functions = "netlify/functions"
+
+# API routes go to the serverless function (matched before the SPA fallback).
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api"
+  status = 200
+
+# Expo Router SPA fallback — every other path serves the app shell.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
