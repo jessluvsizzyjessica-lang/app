@@ -14,7 +14,7 @@ export default function Home() {
           <Link href="/menu" asChild>
             <Pressable><Text style={styles.navLink}>MENUS • 20 boards</Text></Pressable>
           </Link>
-          <Link href="https://app.themobilemixeryca.com" asChild>
+          <Link href="/(tabs)" asChild>
             <Pressable style={styles.pill}><Text style={styles.pillText}>Open App →</Text></Pressable>
           </Link>
         </View>
@@ -30,7 +30,7 @@ export default function Home() {
             We bring the bar, the craft, and the mood — you bring the people. Custom drink menus, floral garnishes, and custom cups available to take it further.
           </Text>
           <View style={styles.ctas}>
-            <Link href="https://app.themobilemixeryca.com" asChild>
+            <Link href="/(tabs)" asChild>
               <Pressable style={styles.btnPrimary}><Text style={styles.btnPrimaryText}>Launch App →</Text></Pressable>
             </Link>
             <Link href="https://ig.me/m/the_mobile_mixery_" asChild>
