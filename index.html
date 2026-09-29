@@ -64,6 +64,11 @@
 .card .wm{position:absolute;bottom:6px;right:10px;width:56px;opacity:.07;pointer-events:none}
 .card .name{font-weight:800;font-size:15px;font-family:Georgia,serif}.card .row{font-size:11px;color:var(--muted);line-height:1.5}.card .row b{color:var(--ink);font-weight:700}
 .galleryGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:900px){.galleryGrid{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.galleryGrid{grid-template-columns:1fr}}
+.reviewGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}@media(max-width:900px){.reviewGrid{grid-template-columns:repeat(2,1fr)}}@media(max-width:600px){.reviewGrid{grid-template-columns:1fr}}
+.reviewCard{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.reviewCard .stars{font-size:12px;letter-spacing:3px}
+.reviewCard blockquote{font-family:Georgia,serif;font-style:italic;font-size:14px;line-height:1.65;margin:0;color:var(--ink)}
+.reviewCard .who{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.5px}
 .videoRow{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:2px 0 20px}.vcap{font-size:11px;color:var(--muted);padding:8px 10px 10px;margin:0;line-height:1.4}@media(max-width:900px){.videoRow{grid-template-columns:repeat(2,1fr)}}
 .gCard{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;position:relative}.gImg{height:220px;background:#E7DCF3;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}.gImg img.real{width:100%;height:100%;object-fit:cover}.gImg .wm2{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) rotate(-10deg);width:70%;opacity:.08;pointer-events:none}
 .gBody{padding:12px}.gBody b{font-size:13px;display:block}.gBody span{font-size:11px;color:var(--muted);display:block;margin-top:3px}
@@ -81,7 +86,7 @@
   <div class="tabs">
     <div class="tab on" data-view="cover">COVER</div>
     <div class="tab" data-view="finder">FINDER</div>
-    <div class="tab" data-view="gallery">GALLERY • 10</div>
+    <div class="tab" data-view="gallery">GALLERY • 12</div>
     <div class="tab" data-view="bio">BIO</div>
     <div class="tab" data-view="inquire">INQUIRE</div>
     <div class="tab" data-view="shop">SHOP</div>
@@ -99,7 +104,7 @@
           <a class="btn btn-yellow" href="https://app.themobilemixeryca.com">📱 Batch OS App →</a>
           <a class="btn btn-purple" href="https://app.themobilemixeryca.com">Client App →</a>
           <div class="tab" data-view="finder">Drink Finder →</div>
-          <div class="tab" data-view="gallery">Real Event Gallery (10)</div>
+          <div class="tab" data-view="gallery">Real Event Gallery (12)</div>
           <div class="tab" data-view="bio">Bio + Behind-Bar Pics</div>
         </div>
       </div>
@@ -110,6 +115,22 @@
           <p>Every setup is styled around your event — no two bars look the same. Custom drink menus, floral garnishes, and custom cups available to take it further.</p>
           <a class="btn btn-dark" href="https://ig.me/m/the_mobile_mixery_" target="_blank">DM @the_mobile_mixery_ • Book on Instagram</a>
         </div>
+      </div>
+    </div>
+    <div style="margin-top:36px">
+      <h2 style="font-family:Georgia,serif;font-size:32px;margin:0;font-weight:400">💬 Client Love</h2>
+      <p style="color:var(--muted);font-size:13px;margin:8px 0 0">Real words from real events — straight from my Instagram stories.</p>
+      <div class="reviewGrid">
+        <div class="reviewCard"><div class="stars">⭐⭐⭐⭐⭐</div><blockquote>"The bride approves of the signature drink! 💜"</blockquote><div class="who">BRIDE • MAY 2024</div></div>
+        <div class="reviewCard"><div class="stars">⭐⭐⭐⭐⭐</div><blockquote>"The best bartender in town 🔥"</blockquote><div class="who">BRIDAL SHOWER • JUNE 2024</div></div>
+        <div class="reviewCard"><div class="stars">⭐⭐⭐⭐⭐</div><blockquote>"Thank you Jessica for the fun times — my niece had the best time. I appreciate it!"</blockquote><div class="who">EVENT GUEST • JUNE 2024</div></div>
+        <div class="reviewCard"><div class="stars">⭐⭐⭐⭐⭐</div><blockquote>"Yesterday was a blast and Melinda was amazing!!"</blockquote><div class="who">EVENT GUEST • AUGUST 2024</div></div>
+        <div class="reviewCard"><div class="stars">⭐⭐⭐⭐⭐</div><blockquote>"Thank you so much for your services and making my princess's quince a hit with the drinks!!"</blockquote><div class="who">QUINCEAÑERA MOM • AUGUST 2024</div></div>
+        <div class="reviewCard"><div class="stars">⭐⭐⭐⭐⭐</div><blockquote>"Such a nice wedding gift from our bartender — thank you!"</blockquote><div class="who">WEDDING CLIENT • NOVEMBER 2024</div></div>
+        <div class="reviewCard"><div class="stars">⭐⭐⭐⭐⭐</div><blockquote>"Thank you so much for such an amazing night ❤️ you were amazing and we will definitely be booking you for more events"</blockquote><div class="who">HAPPY CUSTOMER</div></div>
+        <div class="reviewCard"><div class="stars">⭐⭐⭐⭐⭐</div><blockquote>"My bartender was AMAZING!!!!!! Hit her up for all of your events"</blockquote><div class="who">HAPPY CLIENT • MARCH 2025</div></div>
+        <div class="reviewCard"><div class="stars">⭐⭐⭐⭐⭐</div><blockquote>"Let's give it up for the real MVP behind the bar — keeping our drinks strong, our spirits high, and the party alive!"</blockquote><div class="who">WEDDING CLIENT • JUNE 2025</div></div>
+        <div class="reviewCard"><div class="stars">⭐⭐⭐⭐⭐</div><blockquote>"Melinda and her assistant did a wonderful job. Thank you for your services. I will keep you in mind if I need a bartender in the future."</blockquote><div class="who">BIRTHDAY CLIENT • JUNE 2025</div></div>
       </div>
     </div>
   </div>
@@ -838,6 +859,8 @@ const BOARDS = [
   {img:"gallery/08_tented-event_string-lights.jpg", name:"Tented outdoor event", theme:"String lights", vibe:"Event", season:"Summer"},
   {img:"gallery/09_mario-birthday_themed-bar.jpg", name:"Mario-themed 5th birthday", theme:"Themed birthday bar", vibe:"Birthday", season:"All year"},
   {img:"gallery/10_dirty-thirty_abigails-20s.jpg", name:"\"Death to Abigail's 20s\" dirty thirty", theme:"Themed birthday bar", vibe:"Birthday", season:"All year"},
+  {img:"gallery/11_millans-bar-setup.jpg", name:"The Millan's wedding bar", theme:"Framed custom drink menu", vibe:"Wedding", season:"All year"},
+  {img:"gallery/12_night-pour_closeup.jpg", name:"Night pour, up close", theme:"Cucumber cocktail pour", vibe:"Event", season:"All year"},
 ];
 
 const SEASON_ORDER = ["Spring","Summer","Fall","Winter"];
