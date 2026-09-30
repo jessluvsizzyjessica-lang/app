@@ -1,7 +1,7 @@
 import { Redirect } from "expo-router";
 // The old self-redirect (<Redirect href="/(tabs)" />) looped forever and
-// crashed the app with a blank screen. Send the Discover tab to Mix Magic,
-// the app's main screen, until a dedicated Discover screen exists.
+// crashed the app with a blank screen. Send the Discover tab to Profile,
+// so the app opens on the account screen.
 export default function Index() {
-  return <Redirect href="/(tabs)/mix" />;
+  return <Redirect href="/(tabs)/profile" />;
 }
