@@ -17,7 +17,7 @@ import { useToast } from "@/src/toast";
 import { queryClient } from "@/src/query-client";
 import { fonts, makeStyles, radius, useTheme } from "@/src/theme";
 
-const BOOKING_URL = "https://www.themobilemixeryca.com";
+const BOOKING_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeB0YJJQn_iTzau3C8EoOCegz-WGhJEZ9mKJeWOlH0x9_6uVg/viewform";
 const BOOKING_HERO =
   "https://images.unsplash.com/photo-1621109328469-0e7c5f0c3fc7?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzNTl8MHwxfHNlYXJjaHwxfHxtb2JpbGUlMjBiYXJ0ZW5kZXIlMjBwb3VyaW5nJTIwZHJpbmslMjBldmVudHxlbnwwfHx8fDE3ODg5NDAyNTN8MA&ixlib=rb-4.1.0&q=85";
 
